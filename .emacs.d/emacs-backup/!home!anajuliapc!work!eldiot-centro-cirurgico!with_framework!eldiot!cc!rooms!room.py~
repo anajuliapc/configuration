@@ -1,0 +1,157 @@
+# -*- coding: utf-8 -*-
+
+# eldiot monitor hc
+# Copyright @2016 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Caetano <ana.caetano@eldorado.org.br>,
+#            Paulo Faria <paulo.faria@eldorado.org.br>
+
+import logging
+import time
+
+import eldiot.framework
+
+
+class Room(eldiot.framework.RemoteObject):
+    """Representation of a room in the hospital."""
+
+    default_interface = 'br.org.eldorado.room.hospital'
+
+    log = logging.getLogger('{}.Room'.format(__name__))
+
+    def __init__(self, broker, room, type):
+        super(Room, self).__init__(room['room_uri'])
+        self._broker = broker
+        self._info = room
+        self._type = type
+        #: List of resources (e.g.: bluetooth scanners).
+        self._resources = []
+        self.devices = []
+        self._status = None
+        self._patient_on_room = None
+        self._cleaning_status = False
+
+    @property
+    def status(self, is_set=None, value=None):
+        if is_set:
+            self._status = value
+            return None
+        return self._status
+
+    @eldiot.framework.property
+    def resources(self, is_set, value=None):
+        if is_set:
+            return None
+        return self._resources
+
+    @eldiot.framework.property
+    def room_type(self, is_set, value=None):
+        return self._type
+
+    @eldiot.framework.property
+    def devices_on_room(self, is_set, value=None):
+        if is_set:
+            return None
+        return self.devices
+
+    @eldiot.framework.property
+    def patient_on_room(self, is_set, value=None):
+        if is_set:
+            self._patient_on_room = value
+            return None
+        return self._patient_on_room
+
+    @eldiot.framework.property
+    def needs_cleaning(self, is_set, value=None):
+        if is_set:
+            self._cleaning_status = value
+            return None
+        return self._cleaning_status
+
+    @eldiot.framework.method
+    def add_resource(self, res_type, res_uri):
+        res = {}
+        res[res_type] = res_uri
+        if res not in self._resources:
+            self._resources.append(res)
+
+    @eldiot.framework.method
+    def remove_resource(self, res_uri):
+        for resource in self._resources:
+            for res_type in resource:
+                if resource[res_type] == res_uri:
+                    self._resources.remove(resource)
+
+    @eldiot.framework.signal
+    def event_received(self, event):
+        self.log.info("Room '{}' status changed".format(self.uri))
+
+    @eldiot.framework.method
+    def receive_event(self, event):
+        self.event_received(event)
+
+    @eldiot.framework.method
+    def add_device(self, device):
+        if device not in self.devices:
+            self.devices.append(device)
+
+    @eldiot.framework.method
+    def remove_device(self, device):
+        for item in self.devices:
+            try:
+                self.devices.remove(device)
+            except:
+                self.log.info('Already removed.')
+
+    @eldiot.framework.method
+    def set_patient_to_room(self, uri):
+        self._patient_on_room = uri
+
+    @eldiot.framework.method
+    def change_status(self, status):
+        self._status = status
+
+    @eldiot.framework.method
+    def change_cleaning_status(self, cleaning_status):
+        self._cleaning_status = cleaning_status
+
+    @eldiot.framework.method
+    def set_scanner(self, room_config):
+        # Register scanner:
+        scanner = BLEScanner(room_config['mac'])
+        yield self.register_object(scanner)
+        scanner_uri = room_config['scanner']
+        self.log.info('registering', "Scanner registered: '{}'"
+                      .format(scanner.uri))
+        room.add_resource('scanner', scanner.uri)
+        scanner.set_threshold(room_config['threshold'])
+        # Register BLE devices to each scanner
+        for device in self.config['ble_monitored_devices']:
+            scanner.set_device(device['bdaddr'],
+                               device['tx_power'],
+                               device['type'],
+                               device['ble_uri'])
+        scanner.scan()
+        scanner.transition.connect()
+
+
+class PreSurgeryRoom(Room):
+
+    def __init__(self, broker, room_config):
+        super().__init__(broker, room_config, 'pre_surgery')
+        #print('PreSurgery')
+
+
+class PostSurgeryRoom(Room):
+
+    def __init__(self, broker, room_config):
+        super().__init__(broker, room_config, 'post_surgery')
+        #print('PostSurgery')
+
+
+class SurgeryRoom(Room):
+
+    def __init__(self, broker, room_config):
+        super().__init__(broker, room_config, 'surgery')
+        #print('Surgery')

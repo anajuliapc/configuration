@@ -1,0 +1,22 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#
+
+"""
+Observer Pattern module for Python.
+"""
+
+class Logger():
+
+   def logger(name):
+       log = logging.getLogger(name)
+       log.setLevel(logging.INFO)
+       logFormatter = logging.Formatter(
+           "%(asctime)s [%(name)s] [%(levelname)-5.5s]  %(message)s")
+       consoleHandler = logging.StreamHandler(sys.stdout)
+       consoleHandler.setFormatter(logFormatter)
+       log.addHandler(consoleHandler)
+       return log

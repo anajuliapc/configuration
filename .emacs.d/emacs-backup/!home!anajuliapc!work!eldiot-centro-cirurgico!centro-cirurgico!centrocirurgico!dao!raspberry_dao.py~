@@ -1,0 +1,17 @@
+from model.raspberry import Raspberry
+
+class RaspberryDao(object):
+
+	def __init__(self, session):
+		self.session = session
+
+	def save(self, raspberry):
+		self.session.add(raspberry)
+		self.session.commit()
+
+	def find_by_id(self, id):
+		return self.session.query(Raspberry).get(id)
+
+	
+			
+		

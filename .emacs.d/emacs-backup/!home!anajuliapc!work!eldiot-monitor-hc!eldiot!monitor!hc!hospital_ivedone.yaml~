@@ -1,0 +1,43 @@
+hospital_rooms:
+  # - room_uri: /br/unicamp/hc/pre_surgery
+  #   scanner: /br/org/eldorado/rpi/102764/sensor/bluetooth/scanner
+  #   room_type: pre_surgery
+  #   threshold: 1 #distancia em metros
+  - room_uri: /br/unicamp/hc/surgery10
+    scanner: /br/org/eldorado/rpi/102763/sensor/bluetooth/scanner
+    room_type: surgery
+    threshold: 0.4 #distancia em metros
+  # - room_uri: /br/unicamp/hc/post_surgery
+  #   scanner: /br/org/eldorado/rpi/102765/sensor/bluetooth/scanner
+  #   room_type: post_surgery
+  #   threshold: 1 #distancia em metros
+
+ble_monitored_devices:
+  # Patient bands
+  - tag: PCT4
+    bdaddr: C8:0F:10:5A:CE:69
+    tx_power: -79
+    type: patient
+    ble_uri: /br/unicamp/hc/ble/PCT4
+  - tag: PCT
+    bdaddr: C8:0F:10:68:D5:96
+    tx_power: -70
+    type: patient
+    ble_uri: /br/unicamp/hc/ble/PCT
+  # Cleaning beacons
+  - tag: LIMP
+    bdaddr: C8:0F:10:69:0B:1B
+    tx_power: -80
+    type: cleaning
+    ble_uri: /br/unicamp/hc/ble/limp
+  # Box beacons
+  - tag: ENF
+    bdaddr: C8:0F:10:6B:4B:FB
+    tx_power: -70
+    type: box
+    ble_uri: /br/unicamp/hc/ble/box1
+  - tag: BOX
+    bdaddr: C8:0F:10:68:F7:93
+    tx_power: -70
+    type: box
+    ble_uri: /br/unicamp/hc/ble/box2

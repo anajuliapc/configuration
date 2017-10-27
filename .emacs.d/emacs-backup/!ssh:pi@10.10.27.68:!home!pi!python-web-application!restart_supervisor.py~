@@ -1,0 +1,5 @@
+import time, os
+
+        pid = os.popen('cat /var/opt/eldiot/supervisor/pid').read().rstrip()
+        os.system('sudo kill ' + pid)
+        os.system('sudo service supervisor restart')

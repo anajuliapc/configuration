@@ -1,0 +1,16 @@
+from model import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+class Raspberry(Base):
+
+	__tablename__ = 'raspberry'
+
+	id = Column(Integer, primary_key=True)
+	ip_address = Column(String)
+	room_id = Column(Integer, ForeignKey("room.id"))
+	room = relationship("Room", back_populates="raspberrys")
+	accepted_devices = relationship("AcceptedDevice")
+
+
+	

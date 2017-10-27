@@ -1,0 +1,14 @@
+from model import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+class AcceptedDevice(Base):
+
+	__tablename__ = 'accepted_device'
+
+	id = Column(Integer, primary_key=True)
+	raspberry_id = Column(Integer, ForeignKey("raspberry.id"))
+	rssi_limit = Column(Integer)
+	device_id = Column(Integer, ForeignKey("device.id"))
+	raspberry = relationship("Raspberry", back_populates="accepted_devices")
+	device = relationship("Device", back_populates="raspberrys_accepted")

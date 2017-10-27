@@ -1,0 +1,240 @@
+# coding=utf-8
+
+import tensorflow as tf
+import csv
+import os
+import itertools
+from collections import defaultdict
+
+def get_production_info(files):
+    # First: get what type of info we have.
+    # How many lines? How many stations? How many features?
+    all_headers = defaultdict(int)
+    diff_lines = defaultdict(int)
+    diff_stations = defaultdict(int)
+    diff_features = defaultdict(int)
+    diff_timestamp = defaultdict(int)
+    strange_points = defaultdict(int)
+
+    for dataset in files:
+        print(dataset)
+        reader = csv.DictReader(open(dataset), skipinitialspace=True)
+        headers = reader.fieldnames
+        for header in headers:
+            # Ignore 'Id' and 'Response' entries
+            if header != 'Id' and header != 'Response':
+                all_headers[header] += 1
+
+    for header in all_headers:
+        header_info = header.split('_',2)
+
+        # Extract number of lines
+        line = header_info[0]
+        diff_lines[line] += 1
+
+        # Extract number of stations
+        station = header_info[1]
+        diff_stations[station] += 1
+
+        # Extract number of features
+        feature = header_info[2]
+        if 'F' in feature:
+            diff_features[feature] += 1
+        elif 'D' in feature:
+            diff_timestamp[feature] += 1
+        else:
+            strange_points[feature] += 1
+
+    print(diff_lines)
+    # Get numbers:
+    print('Tenho {} linhas diferentes'.format(len(diff_lines)))
+    print('Tenho {} estações diferentes'.format(len(diff_stations)))
+    print('Tenho {} features diferentes'.format(len(diff_features)))
+    print('Tenho {} timestamps diferentes'.format(len(diff_timestamp)))
+
+def get_failed_ids(filename):
+    # Get rows with Response = 1
+    numeric_set = 'data/train_numeric.csv'
+    failed_ids = []
+
+    with open(numeric_set, 'r') as f1, open(filename, 'a') as f2:
+        reader = csv.reader(f1)
+        writer = csv.writer(f2)
+
+        for row in reader:
+            if row[-1] == '1':
+                # Save Ids of failed measures
+                writer.writerow([row[0]])
+                failed_ids.append(row[0])
+    return failed_ids
+
+def get_measure_details(filenames, output_files, ids):
+    measure_details = []
+
+    files = {}
+    for filename in filenames:
+        f = open(filename, 'r')
+        reader = csv.reader(f)
+        files[filename] = reader
+
+    test_ids = []
+    for i in range(5):
+        test_ids.append(ids[i])
+
+    headers = []
+    for file_reader in files:
+        headers.append(files[file_reader].next())
+
+    count = 0
+    for curr_id in test_ids:
+        for file_reader in files:
+            output_index = 0
+            for row in files[file_reader]:
+                if row[0] == curr_id:
+                    print(curr_id)
+                    new_entry = []
+                    for cell in row:
+                        if cell:
+                            value = {}
+                            cell_index = row.index(cell)
+                            key = headers[output_index][cell_index]
+                            value[key] = cell
+                            new_entry.append(value)
+                        # Solve problem to write file
+                        writer.write(str(new_entry))
+                    writer.write('\n')
+                    output_index += 1
+                    break
+        #     break
+        # break
+
+def get_line(input_file, entry_id):
+    # Try not to close files, so pointer stays at last read line
+    pass
+
+    # # Get only intersting info
+    # with open(file_input, 'r') as f, open(file_output, 'w') as writer:
+    #     reader = csv.reader(f)
+    #     header = reader.next()
+
+    #     count = 0
+    #     for row in reader:
+    #         new_entry = []
+    #         count += 1
+    #         if count > 50:
+    #             break
+    #         else:
+    #             for cell in row:
+    #                 if cell:
+    #                     value = {}
+    #                     cell_index = row.index(cell)
+    #                     key = header[cell_index]
+    #                     value[key] = cell
+    #                     new_entry.append(value)
+    #             writer.write(str(new_entry))
+    #         writer.write('\n')
+
+
+if __name__ == '__main__':
+    files = ['data/train_date.csv',
+             'data/train_categorical.csv',
+             'data/train_numeric.csv']
+    output_files = ['failed_date.csv',
+                    'failed_categorical.csv',
+                    'failed_numeric.csv']
+    measures_file = 'failed_measures_numeric.csv'
+    failed_ids_file = 'failed_ids.csv'
+
+    get_production_info(files)
+    if not os.path.isfile(failed_ids_file):
+        failed_ids = get_failed_ids(failed_ids_file)
+    else:
+        with open(failed_ids_file, 'r') as f:
+            reader = csv.reader(f)
+            failed_ids = []
+            for row in reader:
+                failed_ids.append(row[0])
+
+
+    get_measure_details(files, output_files, failed_ids)
+
+
+    # f = open(files[1], 'r')
+    # reader = csv.reader(f)
+    # reader.next()
+    # print('a1')
+    # count = 0
+    # for row in reader:
+    #     count += 1
+    #     if count > 10:
+    #         break
+    #     print(row[0])
+    # f.close()
+    # f = open(files[1], 'r')
+    # reader = csv.reader(f)
+
+    # print('a2')
+    # count = 0
+    # for row in reader:
+    #     count += 1
+    #     if count > 10:
+    #         break
+    #     print(row[0])
+    #     #reader.next()
+
+
+        # N = 10
+        # print(next(itertools.islice(csv.reader(f), N, None)))
+
+
+
+# print(diff_lines)
+# print(diff_stations)
+# print(diff_features)
+# print(diff_timestamp)
+# print(strange_points)
+
+# filename_queue = tf.train.string_input_producer(files)
+
+# reader = tf.TextLineReader()
+# key, value = reader.read(filename_queue)
+
+
+
+# def get_failed_measures(filename):
+#     # Get rows with Response = 1
+#     numeric_set = files[2]
+#     failed_measures_ids = []
+
+#     with open(numeric_set, 'r') as f1, open(filename, 'a') as f2:
+#         reader = csv.reader(f1)
+#         writer = csv.writer(f2)
+
+#         for row in reader:
+#             if row[-1] != '0':
+#                 # Save Ids of failed measures
+#                 failed_measures_ids.append(row[0])
+#                 writer.writerow(row)
+
+# def get_measure_details(file_input, file_output, ids):
+#     # Get only intersting info
+#     with open(file_input, 'r') as f, open(file_output, 'w') as writer:
+#         reader = csv.reader(f)
+#         header = reader.next()
+
+#         count = 0
+#         for row in reader:
+#             new_entry = []
+#             count += 1
+#             if count > 50:
+#                 break
+#             else:
+#                 for cell in row:
+#                     if cell:
+#                         value = {}
+#                         cell_index = row.index(cell)
+#                         key = header[cell_index]
+#                         value[key] = cell
+#                         new_entry.append(value)
+#                 writer.write(str(new_entry))
+#             writer.write('\n')

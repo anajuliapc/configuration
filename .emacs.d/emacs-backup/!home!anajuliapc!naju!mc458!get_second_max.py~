@@ -1,0 +1,3 @@
+array = []
+
+get_sec_max(A):

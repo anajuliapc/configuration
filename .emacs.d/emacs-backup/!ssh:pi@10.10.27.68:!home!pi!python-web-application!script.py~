@@ -1,0 +1,9 @@
+import time
+
+print('you wanna a working code')
+time.sleep(3)
+print('print many lines')
+time.sleep(3)
+print('look hax0r da tela preta')
+time.sleep(3)
+print('you better work bitch')

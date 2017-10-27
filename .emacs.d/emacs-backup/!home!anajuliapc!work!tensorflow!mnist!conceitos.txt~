@@ -1,0 +1,27 @@
+Arquivo para escrever conceitos visto que euzi aprendo melhor se escrever o que estou lendo.
+
+Gradient Descent:
+- é um algoritmo de otimização usado para encontrar os valores de parametros (coeficientes) de uma função (f) quue minimiza uma função de custo (cost)
+- Quando utilizar: quando os parametros não podem ser calculados analiticamente e devem ser encontrados por um algoritmo de otimizaçoã
+
+
+Softmax Regression:
+- Quando usar: quando queremos atribuir as probabilidades de um objeto ser um dentre várias coisas diferentes. Softmax nos dá uma lista de valores entre 0 e 1 que somam 1 (probavilidades). Mesmo em modelos mais sofisticados, o passo final será uma camada de softmax.
+- SR tem dois passos:
+     - primeiro soma as evidencias da entrada estar em certas classes
+     - então converte essa evidência em probabilidades
+- Para contar a evidencia de uma dada imagem estar em uma classe particular, fazemos uma soma ponderada das intensidades dos pixels:
+     - O peso é negativo se o pixel de alta intensidade é uma evidência da imagem NÃO ser daquela classe;
+     - O peso é positivo se o píxel de alta intensidade é uma evidência da imagem SER daquela classe.
+- Adiciona-se tbm um 'bias' (viés), que é uma evidência a mais. O bias serve pra dizer que certas coisas são mais prováveis independentemente da entrada.
+- Evidencia_i = SOMATÓRIO_j(W_(i,j) * x_j) + b_i
+- y = softmax(evidencia) -> converte as contagens em probabilidades
+
+
+Processo de treinamento
+- Define-se o que significa pro modelo ser ruim: custo ou loss
+
+Loss
+- representa o quão longe o modelo está da saída desejada. A ideia é minimizar este erro, e quanto menor for a margem de erro, melhor é o modelo
+- uma função bastante comum para determinar o loss de um modelo: cross-entropy.
+  - de maneira grosseira: cross-entropy mede o quão ineficiente as predições são pra descrever a realidade.

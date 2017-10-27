@@ -1,0 +1,74 @@
+import tensorflow as tf
+
+# Entendendo o uso de sessões e grafos
+
+"""
+Os nós 1 e 2 são nós do grafo. Eles não tem entrada e sua saída é um valor guardado internamente.
+(Lembrando que os nós são operações do TF que recebem - ou não - inputs e tem como saída um tensor)
+Ao printar os nós 1 e 2, vemos apenas a declaração dos objetos Tensor, sem de fato 'liberar' o valor
+que armazenam.
+Note que o Tensor declarado possui um nome, um shape, e um tipo.
+"""
+node1 = tf.constant(3.0, tf.float32)
+node2 = tf.constant(4.0) # also tf.float32 implicitly
+print('Nodes 1 e 2: ', node1, node2)
+
+"""
+Para de fato 'calcular' os valores dos nós, é preciso executar o grafo através de uma sessão.
+"""
+sess = tf.Session()
+print(sess.run([node1, node2]))
+
+
+"""
+É possível criar operações mais complexas combinando nós de Tensor com operações (que também são nós).
+Operações não necessariamente se referem a operações matemáticas (+, -, *, /, etc), mas a própria declaração de um Tensor (como no caso acima, que temos a operação 'constant')
+Podemos, por exemplo, somar nossos dois nós de constantes de produzir um novo grafo.
+"""
+node3 = tf.add(node1, node2)
+print("node3: ", node3)
+print("sess.run(node3): ", sess.run(node3))
+
+"""
+Grafos podem ser parametrizados para aceitar entradas externas. São os chamados placeholders.
+"""
+# As três linhas a seguir funcionam como uma espécie de função ou lambda.
+a = tf.placeholder(tf.float32)
+b = tf.placeholder(tf.float32)
+adder_node = a + b  # + provides a shortcut for tf.add(a, b)
+# Podemos chamar a função da seguinte forma:
+print('\n Adder node:')
+print('adder_node com a=3 e b=4.5: ', sess.run(adder_node, {a: 3, b:4.5}))
+print('adder_node com a=[1,3] e b=[2,4]: ', sess.run(adder_node, {a: [1,3], b: [2, 4]}))
+
+
+# Dá pra complicar o quanto quiser
+add_and_triple = adder_node * 3.
+print('\n Add and triple:')
+print('(a=3 + b=4.5) * 3: ', sess.run(add_and_triple, {a: 3, b:4.5}))
+
+# Ou brincando ainda mais:
+c = tf.placeholder(tf.float32)
+add_and_multiply = adder_node * c
+print('\n Add and multiply:')
+print('(a=3 + b=4.5) * c=10: ', sess.run(add_and_multiply, {a: 3, b:4.5, c:10}))
+
+
+"""
+Em machine learning, geralmente precisamos de modelos que tomem entradas arbitrárias, como acima.
+Para tornar um modelo treinável, devemos ser capazes de modificar o grafo para obter novas saídas usando a mesma entrada. ~Variáveis~ permitem adicionar parametros treináveis a um grafo.
+"""
+W = tf.Variable([.3], tf.float32)
+b = tf.Variable([-.3], tf.float32)
+x = tf.placeholder(tf.float32)
+linear_model = W * x + b
+
+"""
+A grande diferença entre Variaveis e Constantes:
+Constantes são inicializadas no momento em que vc chama tf.constant, mas variáveis não são inicializadas quando vc chama tf.variable. É preciso inicializá-las explicitamente, chamando a seguinte função:
+"""
+init = tf.global_variables_initializer()
+sess.run(init)
+# Agora sim:
+print('\nModelo linear:')
+print(sess.run(linear_model, {x:[1,2,3,4]}))

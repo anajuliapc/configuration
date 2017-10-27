@@ -1,0 +1,120 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            Paulo Renato de Faria <paulo.faria@eldorado.org.br>
+#
+
+
+import logging
+import argparse
+
+from twisted.internet import defer, reactor
+
+from pkg_resources import resource_stream
+import yaml
+
+from .room import Room, PreSurgeryRoom, PostSurgeryRoom, SurgeryRoom
+from .scanner import BLEScanner
+from .ble_device import BLEDevice
+from .observer import Observer, Observable, Logger
+
+from model.room import Room
+from model.room_status import RoomStatus
+from model.raspberry import Raspberry
+from model.device import Device
+from model.device_status import DeviceStatus
+from model.accepted_device import AcceptedDevice
+from model.transaction import Transaction
+
+from dao.room_dao import RoomDao
+from dao.room_status_dao import RoomStatusDao
+from dao.raspberry_dao import RaspberryDao
+from dao.device_status_dao import DeviceStatusDao
+from dao.accepted_device_dao import AcceptedDeviceDao
+from dao.transaction_dao import TransactionDao
+
+
+
+class BrokerCC():
+
+    log = Logger.logger('BrokerCC')
+
+    def __init__(self):
+        with resource_stream(__name__, 'parameters.yaml') as stream:
+            self.config = yaml.safe_load(stream)
+        self.rooms = self.config['hospital_rooms']
+        parser = argparse.ArgumentParser(
+            prog='eldiot-centro-cirurgico',
+            description='eldiot broker %(prog)s')
+        self.add_arguments(parser)
+        self.args = parser.parse_args()
+        # Start observable
+        self.observable = Observable()
+        # Start daos
+        self.db_session = Session()
+        self.room_dao = RoomDao(self.db_session)
+        self.raspberry_dao = RaspberryDao(self.db_session)
+        self.room_status_dao = RoomStatusDao(self.db_session)
+        self.device_status_dao = DeviceStatusDao(self.db_session)
+        self.accepted_device_dao = AcceptedDeviceDao(self.db_session)
+        self.transaction_dao = TransactionDao(self.db_session)
+
+        self.raspberry = self.raspberry_dao.find_by_id(self.config['raspberry']['id'])
+        self.on_connect()
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            'rpi',
+            help='ID to identify this Raspberry Pi')
+
+    def on_connect(self):
+        self.log.info('Connected')
+        # Register scanners and rooms
+        for room in self.rooms:
+            if str(room['mac']) == self.args.rpi:
+                room_uri = room['room_uri']
+                self.set_room(room)
+
+    def set_room(self, room_config):
+        scanner_uri = room_config['scanner']
+        room_type = room_config['room_type']
+        if room_type == 'pre_surgery':
+            room = PreSurgeryRoom(self.observable, room_config)
+            room.status = 'PRE_OPERATORIO'
+        elif room_type == 'surgery':
+            room = SurgeryRoom(self.observable, room_config)
+            room.status = 'LIVRE'
+        else:
+            room = PostSurgeryRoom(self.observable, room_config)
+            room.status = 'RPA'
+        room_observer = RoomUpdate(room)
+        self.observable.register(room_observer)
+        self.log.info('Registered room: {}'.format(room.uri))
+        scanner = BLEScanner(room_config['mac'], self.observable)
+        room.scanner = scanner
+        self.log.info('Scanner registered: {}'.format(scanner.uri))
+        scanner.set_threshold(room_config['threshold'])
+        # Register BLE devices to each scanner
+        for device in self.config['ble_monitored_devices']:
+            scanner.set_device(device['bdaddr'],
+                               device['tx_power'],
+                               device['type'],
+                               device['ble_uri'])
+            ble_device = BLEDevice(device['ble_uri'],
+                                   device['bdaddr'],
+                                   device['tx_power'],
+                                   device['type'])
+            self.observable.register_ble(ble_device)
+        scanner.scan()
+
+
+class RoomUpdate(Observer):
+
+    def __init__(self, room):
+        self._room = room
+
+    # should be able to call room.method to deal with changes
+    def update(self, *args, **kwargs):
+        self._room.on_transition(*args)

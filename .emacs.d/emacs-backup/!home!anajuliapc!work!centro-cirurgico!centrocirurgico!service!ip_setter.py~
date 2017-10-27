@@ -1,0 +1,6 @@
+from .model.raspberry import Raspberry
+from .dao.raspberry_dao import RaspberryDao
+
+engine = create_engine(
+    'postgresql://postgres:a18zxy@hc-dev.dsb.eldorado.org.br/hospital')
+Session = sessionmaker(bind=engine)

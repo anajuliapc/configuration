@@ -1,0 +1,626 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/anajuliapc/work/datascience/bosch/" . "jupyter/")
+ ("/home/anajuliapc/work/datascience/" . "bosch/")
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/monitor/" . "hc/")
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/" . "monitor/")
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/" . "eldiot/")
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/" . "eldiot/")
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/python3.4/site-packages/" . "eldiot_notify_hc-0.0.0.dist-info/")
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/python3.4/" . "site-packages/")
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/" . "python3.4/")
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/" . "lib/")
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/" . "deletar/")
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor/eldiot/" . "monitor/")
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot/" . "eldiot-broker-hc/")
+ ("/home/anajuliapc/work/tensorflow/try-tf/" . "simdata/")
+ ("/home/anajuliapc/work/tensorflow/regression/" . "grupobimbo/")
+ ("/home/anajuliapc/work/tensorflow/classification/" . "titanic/")
+ ("/home/anajuliapc/work/machine_learning/tensorflow/kaggle/" . "titanic/")
+ ("/home/anajuliapc/work/machine_learning/tensorflow/" . "kaggle/")
+ ("/home/anajuliapc/work/machine_learning/" . "tensorflow/")
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/tutorials/image/" . "imagenet/")
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/tutorials/" . "image/")
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/" . "tutorials/")
+ ("/home/anajuliapc/work/tensorflow/image_recognition/" . "models/")
+ ("/home/anajuliapc/work/tensorflow/" . "classification/")
+ ("/ssh:pi@10.10.27.91:/home/pi/python-web-application/" . "__pycache__/")
+ ("/ssh:pi@10.10.27.91:/home/pi/raspberry-application/centrocirurgico/" . "service/")
+ ("/ssh:pi@10.10.27.91:/home/pi/raspberry-application/" . "centrocirurgico/")
+ ("/ssh:pi@10.10.27.91:/home/pi/" . "python-web-application/")
+ ("/ssh:pi@10.10.27.68:/home/" . "pi/")
+ ("/ssh:pi@10.10.27.68:/home/pi/raspberry-application/centrocirurgico/" . "service/")
+ ("/ssh:pi@10.10.27.68:/home/pi/raspberry-application/" . "centrocirurgico/")
+ ("/ssh:pi@10.10.27.68:/home/pi/" . "raspberry-application/")
+ ("/pi@10.10.27.68:" . "python-web-application/")
+ ("/home/anajuliapc/work/centro-cirurgico/python-web-app/" . "venv/")
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-web-app/" . "venv/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/lib/python3.5/site-packages/eldiot/brokers/" . "mobile/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/lib/python3.5/site-packages/eldiot/" . "brokers/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/lib/python3.5/site-packages/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/lib/python3.5/" . "site-packages/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/lib/" . "python3.5/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/" . "lib/")
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/" . "service/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/" . "report/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/" . "pages/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/" . "report/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/" . "js/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/service/" . "impl/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/controller/" . "api/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/" . "service/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/" . "eldorado/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/" . "org/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/" . "br/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/" . "webapp/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/" . "main/")
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/" . "src/")
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/" . "centrocirurgico/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/java/br/org/eldorado/service/" . "impl/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/java/br/org/eldorado/controller/" . "api/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/java/br/org/eldorado/" . "repository/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/webapp/WEB-INF/pages/" . "room/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/webapp/WEB-INF/" . "pages/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/java/br/org/" . "eldorado/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/java/br/" . "org/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/java/" . "br/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/webapp/js/" . "room/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/webapp/" . "js/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/main/" . "webapp/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/src/" . "main/")
+ ("/home/anajuliapc/work/centro-cirurgico/surgery-center/" . "src/")
+ ("/home/anajuliapc/work/old-eldiot-centro-cirurgico/" . "eldiot-centro-cirurgico-meu/")
+ ("/home/anajuliapc/work/centro-cirurgico/centrocirurgico/" . "service/")
+ ("/home/anajuliapc/work/centro-cirurgico/" . "eldiot-notify-hc/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/centro-cirurgico/centrocirurgico/service/" . "__pycache__/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/centro-cirurgico/centrocirurgico/room/" . "__pycache__/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/centro-cirurgico/centrocirurgico/" . "service/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/centro-cirurgico/centro-cirurgico/room/" . "model/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/centro-cirurgico/centro-cirurgico/" . "room/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/centro-cirurgico/" . "centrocirurgico/")
+ ("/home/anajuliapc/work/eldiot-django-app/centrocirurgico/" . "centrocirurgico/")
+ ("/home/anajuliapc/work/eldiot-django-app/" . "centrocirurgico/")
+ ("/home/anajuliapc/naju/future_app/mysite/blog/static/" . "css/")
+ ("/home/anajuliapc/naju/future_app/mysite/blog/templates/" . "blog/")
+ ("/home/anajuliapc/naju/future_app/mysite/blog/" . "templates/")
+ ("/home/anajuliapc/naju/future_app/mysite/" . "blog/")
+ ("/home/anajuliapc/naju/future_app/" . "mysite/")
+ ("/home/anajuliapc/naju/" . "crackingthecode/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/no_framework/eldiot/cc/rooms/" . "tests/")
+ ("/ssh:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-mobile/eldiot/brokers/" . "mobile/")
+ ("/ssh:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-mobile/eldiot/" . "brokers/")
+ ("/ssh:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-mobile/" . "doc/")
+ ("/ssh:ana.caetano@eldiot.ioe:/home/ana.caetano/work/" . "eldiot-broker-mobile/")
+ ("/ssh:ana.caetano@eldiot.ioe:/home/ana.caetano/" . "work/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/with_framework/eldiot/cc/" . "rooms/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/with_framework/eldiot/" . "cc/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/with_framework/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/no_framework/eldiot/cc/" . "rooms/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/no_framework/eldiot/" . "cc/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/no_framework/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/eldiot/cc/" . "rooms/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/eldiot/" . "cc/")
+ ("/home/anajuliapc/work/eldiot-centro-cirurgico/" . "centro-cirurgico/")
+ ("/ssh:pi@10.10.27.78:/opt/eldiot/usr/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/ssh:pi@10.10.27.78:/opt/eldiot/usr/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/ssh:pi@10.10.27.78:/opt/eldiot/usr/eldiot-broker-hc/" . "eldiot/")
+ ("/ssh:pi@10.10.27.78:/opt/eldiot/usr/" . "eldiot-broker-hc/")
+ ("/ssh:pi@10.10.27.78:/opt/eldiot/" . "usr/")
+ ("/ssh:pi@10.10.27.78:/opt/" . "eldiot/")
+ ("/ssh:pi@10.10.27.78:/" . "opt/")
+ ("/pi@10.10.27.80:work/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/pi@10.10.27.80:work/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/pi@10.10.27.80:work/eldiot-broker-hc/" . "eldiot/")
+ ("/pi@10.10.27.80:work/" . "eldiot-broker-hc/")
+ ("/pi@10.10.27.80:" . "work/")
+ ("/home/anajuliapc/work/interface-tv-hc/" . "eldorado/")
+ ("/home/anajuliapc/work/router-igual-heroku/" . ".crossbar/")
+ ("/home/anajuliapc/apagar/" . "maisumteste/")
+ ("/home/anajuliapc/work/heroku/eldiot-hc/" . ".crossbar/")
+ ("/home/anajuliapc/work/interface-tv-hc/eldorado/hc_tv_workflow/project/templates/" . "hc/")
+ ("/home/anajuliapc/work/interface-tv-hc/eldorado/hc_tv_workflow/project/" . "templates/")
+ ("/home/anajuliapc/work/interface-tv-hc/eldorado/hc_tv_workflow/" . "project/")
+ ("/home/anajuliapc/work/interface-tv-hc/eldorado/" . "hc_tv_workflow/")
+ ("/ssh:paulo.faria@10.1.240.2:/var/www/" . "html/")
+ ("/ssh:paulo.faria@10.1.240.2:/var/" . "www/")
+ ("/ssh:paulo.faria@10.1.240.2:/" . "var/")
+ ("/home/anajuliapc/work/html/" . "supervisor-interface/")
+ ("/home/anajuliapc/work/eldiot-monitor-hc/eldiot/monitor/hc/" . "__pycache__/")
+ ("/home/anajuliapc/work/heroku/eldiot/" . ".crossbar/")
+ ("/home/anajuliapc/work/heroku/eldiot-dev/" . ".crossbar/")
+ ("/home/anajuliapc/work/heroku/" . "eldiot-hc/")
+ ("/home/anajuliapc/work/eldiot-broker-smartparkinglot/eldiot/brokers/" . "smartparkinglot/")
+ ("/home/anajuliapc/work/eldiot-broker-smartparkinglot/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot-broker-smartparkinglot/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-monitor-hc/eldiot/monitor/" . "hc/")
+ ("/home/anajuliapc/work/eldiot-monitor-hc/eldiot/" . "monitor/")
+ ("/home/anajuliapc/work/eldiot-monitor-hc/" . "eldiot/")
+ ("/scp:pi@10.10.27.62:" . ".emacs.d/")
+ ("/home/anajuliapc/work/eldiot-broker-datascience/eldiot/brokers/" . "datascience/")
+ ("/home/anajuliapc/work/eldiot-broker-datascience/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot-broker-datascience/" . "eldiot/")
+ ("/home/anajuliapc/work/teste/" . "eldiot/")
+ ("/scp:pi@10.10.27.63:/home/pi/work/" . "eldiot-broker-hc/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-smartparkinglot/eldiot/brokers/" . "smartparkinglot/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-smartparkinglot/eldiot/" . "brokers/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-smartparkinglot/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-broker-weather/eldiot/brokers/" . "weather/")
+ ("/home/anajuliapc/work/eldiot-broker-weather/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot-broker-weather/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/usr/smartbuilding/" . "src/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-smartparkinglot/eldiot/brokers/" . "smartparkinglot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-smartparkinglot/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-smartparkinglot/" . "eldiot/")
+ ("/home/anajuliapc/work/framework/eldiot/" . "framework/")
+ ("/home/anajuliapc/work/framework/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-mobile/eldiot/brokers/mobile/" . "test/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-framework/eldiot/framework/" . "test/")
+ ("/home/anajuliapc/crossbarexamples/authentication/wampcra/static/" . ".crossbar/")
+ ("/home/anajuliapc/crossbarexamples/authentication/wampcra/dynamic/" . "python/")
+ ("/home/anajuliapc/work/eldiot-router/" . ".crossbar/")
+ ("/home/anajuliapc/crossbarexamples/authentication/wampcra/" . "static/")
+ ("/home/anajuliapc/crossbarexamples/authentication/" . "wampcra/")
+ ("/home/anajuliapc/crossbarexamples/demos/votes/mobile/web/" . "js/")
+ ("/home/anajuliapc/crossbarexamples/demos/votes/mobile/" . "web/")
+ ("/home/anajuliapc/crossbartest/mobile/web/" . "js/")
+ ("/home/anajuliapc/crossbartest/mobile/" . "web/")
+ ("/home/anajuliapc/crossbarexamples/iotcookbook/device/pi/" . "gpio/")
+ ("/home/anajuliapc/crossbarexamples/iotcookbook/device/" . "pi/")
+ ("/home/anajuliapc/crossbarexamples/iotcookbook/" . "device/")
+ ("/home/anajuliapc/crossbarexamples/docker/" . "disclose/")
+ ("/home/anajuliapc/crossbarexamples/demos/votes/python/web/" . "js/")
+ ("/home/anajuliapc/crossbarexamples/demos/votes/python/" . "web/")
+ ("/home/anajuliapc/crossbarexamples/demos/votes/" . "python/")
+ ("/home/anajuliapc/work/eldiot-framework/eldiot/framework/" . "test/")
+ ("/home/anajuliapc/work/eldiot-framework/eldiot/" . "framework/")
+ ("/home/anajuliapc/work/eldiot-framework/" . "eldiot/")
+ ("/home/anajuliapc/crossbartest/" . "mobile/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/var/" . "eldiot-router/")
+ ("/home/anajuliapc/crossbarexamples/hello/python/" . "web/")
+ ("/home/anajuliapc/crossbarexamples/demos/" . "colorpicker/")
+ ("/home/anajuliapc/crossbarexamples/hello/" . "python/")
+ ("/home/anajuliapc/crossbarexamples/" . "authentication/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-broker-hc/eldiot/brokers/hc/" . "__pycache__/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-mobile/eldiot/brokers/" . "mobile/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-mobile/eldiot/" . "brokers/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-mobile/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-snap/eldiot/" . "snap/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-snap/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-snap/eldiot/brokers/" . "snap/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-snap/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-snap/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-monitor/eldiot/" . "monitor/")
+ ("/home/anajuliapc/work/eldiot-monitor/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/home/anajuliapc/work/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/home/anajuliapc/bluez/bluez-5.41/" . "lib/")
+ ("/home/anajuliapc/bluez/" . "bluez-5.41/")
+ ("/home/anajuliapc/work/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/home/anajuliapc/work/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot-broker-hc/" . "eldiot/")
+ ("/home/anajuliapc/work/eldiot-broker-mobile/eldiot/brokers/" . "mobile/")
+ ("/home/anajuliapc/work/eldiot-broker-mobile/eldiot/" . "brokers/")
+ ("/home/anajuliapc/work/eldiot-broker-mobile/" . "eldiot/")
+ ("/home/anajuliapc/work/" . "datascience/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-hc/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-framework/eldiot/framework/" . "test/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-framework/eldiot/" . "framework/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-framework/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-framework/eldiot/framework/" . "test/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-framework/eldiot/" . "framework/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-framework/" . "eldiot/")
+ ("/home/anajuliapc/venv/" . "testes/")
+ ("/home/anajuliapc/.emacs.d/" . "elpa/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-mobile/eldiot/brokers/" . "mobile/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-mobile/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-mobile/" . "eldiot/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/local/lib/python2.7/site-packages/" . "serial/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/local/lib/python2.7/" . "site-packages/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/local/lib/" . "python2.7/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/local/" . "lib/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/lib/python2.7/" . "distutils/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/lib/" . "python2.7/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/blesniffer/" . "local/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/venv/" . "blesniffer/")
+ ("/scp:pi@10.10.27.62:/home/pi/Adafruit_BLESniffer_Python/" . "venv/")
+ ("/pi@10.10.27.62:Adafruit_BLESniffer_Python/" . "SnifferAPI/")
+ ("/scp:pi@10.10.27.62:/home/pi/bluetooth_stuff/Adafruit_Python_BluefruitLE/Adafruit_BluefruitLE/" . "interfaces/")
+ ("/scp:pi@10.10.27.62:/home/pi/bluetooth_stuff/" . "Adafruit_Python_BluefruitLE/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/eldiot-framework/eldiot/" . "framework/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/eldiot-framework/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-monitor/eldiot/" . "monitor/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-monitor/" . "eldiot/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-broker-hc/" . "eldiot/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-framework/eldiot/" . "framework/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-framework/venv/eldiot-framework/lib/" . "python3.5/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-framework/venv/eldiot-framework/" . "lib/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-framework/venv/" . "eldiot-framework/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/eldiot-framework/" . "eldiot/")
+ ("/pi@10.10.27.62:work/eldiot-broker-hc/eldiot/brokers/" . "hc/")
+ ("/pi@10.10.27.62:work/eldiot-broker-hc/eldiot/" . "brokers/")
+ ("/pi@10.10.27.62:work/eldiot-broker-hc/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:demos/" . "raspberry/")
+ ("/scp:pi@10.10.27.62:/home/pi/work/" . "eldiot-broker-hc/")
+ ("/scp:pi@10.10.27.62:/home/pi/" . "work/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/ana.caetano@eldiot.ioe:work/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/pi@10.10.27.62:work/" . "eldiot-broker-hc/")
+ ("/pi@10.10.27.62:" . "work/")
+ ("/ana.caetano@eldiot.ioe:work/" . "eldiot-broker-mobile/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/demos/" . "emailbroker/")
+ ("/scp:ana.caetano@eldiot.ioe:work/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/scp:ana.caetano@eldiot.ioe:work/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:work/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:work/" . "eldiot-smartdoor/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-broker-smartparkinglot/eldiot/brokers/" . "smartparkinglot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-broker-smartparkinglot/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-broker-smartparkinglot/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-monitor/eldiot/" . "monitor/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-monitor/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/var/opt/eldiot/" . "eldiot-broker-smartbuilding/")
+ ("/scp:ana.caetano@eldiot.ioe:/var/opt/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/var/" . "opt/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/work/" . "eldiot-broker-smartparkinglot/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-broker-mobile/" . "include/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/usr/" . "smartbuilding/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/etc/supervisor/" . "conf.d/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/etc/" . "supervisor/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/eldiot/" . "usr/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/etc/supervisor/" . "conf.d/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/etc/" . "supervisor/")
+ ("/ana.caetano@eldiot.ioe:venv/demos/databasebroker/backup/" . "__pycache__/")
+ ("/ana.caetano@eldiot.ioe:venv/demos/databasebroker/" . "backup/")
+ ("/scp:ana.caetano@eldiot.ioe:/opt/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/" . "opt/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/demos/databasebroker/" . "backup/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-framework/eldiot/framework/" . "logging/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/demos/emailbroker/" . "dist/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/eldiot-monitor/" . "bin/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/smartbuilding/" . "src/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/usr/" . "eldiot-broker-mobile/")
+ ("/ana.caetano@eldiot.ioe:/opt/eldiot/" . "usr/")
+ ("/ana.caetano@eldiot.ioe:/opt/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:/" . "opt/")
+ ("/" . "opt/")
+ ("/home/anajuliapc/demo-eldiot/blossom/smartbuilding/eldiot-broker-smartbuilding/" . "nodes/")
+ ("/home/anajuliapc/demo-eldiot/blossom/smartbuilding/" . "aj/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-framework/eldiot/" . "framework/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/eldiot-framework/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/" . "ana.caetano/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/demos/" . "raspberry/")
+ ("/ana.caetano@eldiot.ioe:venv/demos/" . "databasebroker/")
+ ("/scp:ana.caetano@eldiot.ioe:venv/garnet/demo/" . "databasebroker/")
+ ("/scp:ana.caetano@eldiot.ioe:venv/garnet/" . "demo/")
+ ("/scp:ana.caetano@eldiot.ioe:venv/" . "garnet/")
+ ("/scp:ana.caetano@eldiot.ioe:" . "work/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-snap/snappy/" . "bus/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-snap/eldiot/brokers/snap/" . "test/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-snap/" . "snappy/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-snap/eldiot/brokers/" . "snap/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-snap/eldiot/" . "brokers/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-snap/" . "eldiot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/eldiot-broker-smartbuilding/eldiot/brokers/smartbuilding/" . "__pycache__/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/demo/" . "examples/")
+ ("/ana.caetano@eldiot.ioe:eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/ana.caetano@eldiot.ioe:eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/ana.caetano@eldiot.ioe:eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/demo/" . "databasebroker/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/garnet/" . "eldiot-broker-smartparkinglot/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/venv/" . "garnet/")
+ ("/scp:ana.caetano@eldiot.ioe:/home/ana.caetano/" . "work/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-smartbuilding/eldiot/brokers/" . "smartbuilding/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-smartbuilding/eldiot/" . "brokers/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-broker-smartbuilding/" . "eldiot/")
+ ("/home/" . "anajuliapc/")
+ ("/ana.caetano@eldiot.ioe:venv/garnet/" . "eldiot-framework/")
+ ("/ana.caetano@eldiot.ioe:venv/" . "garnet/")
+ ("/ana.caetano@eldiot.ioe:" . "work/")
+ ("/home/anajuliapc/demo-eldiot/blossom/eldiot-framework/eldiot/" . "framework/")
+ ("/home/anajuliapc/demo-eldiot/blossom/eldiot-framework/" . "eldiot/")
+ ("/home/anajuliapc/demo-eldiot/blossom/eldiot-client/" . "eldiot-client/")
+ ("/home/anajuliapc/demo-eldiot/blossom/" . "demos/")
+ ("/home/anajuliapc/demo-eldiot/peebles/" . "eldiot-client/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-client/eldiot/client/" . "test/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-client/eldiot/" . "client/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-client/" . "lib/")
+ ("/home/anajuliapc/demo-eldiot/venv/" . "eldiot-snap/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-framework/eldiot/" . "framework/")
+ ("/home/anajuliapc/demo-eldiot/venv/eldiot-framework/" . "eldiot/")
+ ("/home/anajuliapc/" . "work/")
+ ("/home/anajuliapc/demo-eldiot/" . "blossom/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/anajuliapc/"
+ "/home/anajuliapc/work/datascience/bosch/"
+ "/home/anajuliapc/work/datascience/bosch/jupyter/"
+ "/home/anajuliapc/naju/crackingthecode/"
+ "/home/anajuliapc/work/cepetro/"
+ "/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/brokers/hc/"
+ "/home/anajuliapc/Downloads/"
+ "/home/anajuliapc/work/datascience/bosch/data/"
+ "/home/anajuliapc/work/eldiot/eldiot-broker-restapi/"
+ "/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/"
+ "/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/eldiot/"
+ "/home/anajuliapc/work/centro-cirurgico/python-web-app/"
+ "/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/"
+ "/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/monitor/hc/"
+ "/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/monitor/"
+ "/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/"
+ "/home/anajuliapc/work/eldiot/eldiot-monitor/"
+ "/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/service/"
+ "/home/anajuliapc/work/eldiot/eldiot-monitor/eldiot/monitor/"
+ "/home/anajuliapc/work/eldiot/eldiot-broker-hc/"
+ "/home/anajuliapc/work/tensorflow/classification/titanic/"
+ "/home/anajuliapc/work/tensorflow/try-tf/simdata/"
+ "/home/anajuliapc/work/tensorflow/try-tf/"
+ "/home/anajuliapc/work/tensorflow/classification/iris/"
+ "/home/anajuliapc/work/tensorflow/mnist/"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/report/"
+ "/home/anajuliapc/work/tensorflow/classification/"
+ "/home/anajuliapc/work/tensorflow/"
+ "/home/anajuliapc/work/machine_learning/tensorflow/kaggle/titanic/"
+ "/home/anajuliapc/work/tensorflow/image_recognition/models/tutorials/image/imagenet/"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/report/"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/template/"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/css/"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/dashboard/"
+ "/home/anajuliapc/work/tensorflow/tutorials/"
+ "/home/anajuliapc/loganalyse/"
+ "/home/anajuliapc/work/tensorflow/portaslogicas/"
+ "/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/dao/"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/raspberry/"
+ "/ssh:pi@10.10.27.68:/home/pi/python-web-application/"
+ "/pi@10.10.27.68:python-web-application/"
+ "/pi@10.10.27.63:"
+ "/pi@10.10.27.68:"
+ "/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/raspberry/"
+ "/home/anajuliapc/naju/mc458/"
+ "/pi@10.10.27.91:"
+ "/ssh:pi@10.10.27.91:/home/pi/raspberry-application/centrocirurgico/"
+ "/ssh:pi@10.10.27.91:/home/pi/python-web-application/"
+ "/ssh:pi@10.10.27.91:/home/pi/raspberry-application/centrocirurgico/service/"
+ "/pi@"
+)
+
+;; ----- ido-work-file-list -----
+(
+ ".emacs"
+ ".bashrc"
+ "pca_svm.py"
+ "bosch_production.py"
+ "Bosch.ipynb"
+ "array-left-rotation.py"
+ "contagem.py"
+ "get_part_of_csv.py"
+ "openmodaltest.py"
+ "__init__.py"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/anajuliapc/" (23027 11977 461234 8000) ".ICEauthority" "examples.desktop" ".dbus/" "requirements.txt" ".heroku/" ".ipython/" "stations.png" ".vim/" "5Pikachu.png" ".thunderbird/" ".java/" "line_stations.png" ".davmail.properties~" "eldiot-broker-hc.conf" ".viminfo" "linhas.png" "bosh_lines.png" ".keras/" "linhas_estações.png" "calculap2.py" "crontab-copy" ".gconf/" "smartroom_image.py" "daemon.log" ".netrc" ".gradle/" ".emacs~" ".sky2/" ".gvfs/" "logs.zip" "../" ".emacs.d/" ".pgpass" "builds/" "Templates/" "Music/" "./" "Videos/" ".ssh/" "smartbuilding/" "logs_hc/" ".gimp-2.8/" ".jupyter/" ".npm/" ".pgadmin_histoqueries" ".ido.last" "check-wifi.sh" ".pgadmin3" ".mozilla/" "querybyroom" ".adobe/" ".dbshell" "Pictures/" ".bash_logout" "lines.png" ".pypirc" "watchteste" ".emacs" ".pip/" ".pki/" "aaaaa" ".local/" ".python_history" "crossbarexamples/" ".gstreamer-0.10/" "smartroom_temp_image.py" ".profile" "watchpoint_test.c" ".lesshst" ".cache/" "Desktop/" ".davmail2.properties" "pgadmin.log" "nohup.out" ".macromedia/" "estações.png" "exwatchpoint" "abstract.txt" "myconfig/" "Public/" ".Xauthority" ".dmrc" ".thumbnails/" ".tmux.conf" ".plotly/" ".config/" ".bash_history" "Downloads/" "rpi_images/" "Documents/" "setuptools-24.0.2.zip" "select" "imagerpi81030217.gz" ".xinputrc" ".xsession-errors" ".selected_editor" "eldiot_monitor_hc-2.6-py3-none-any.whl" ".gitconfig" "demo-eldiot/" ".bashrc" "work/" "naju/" "a.out" ".xsession-errors.old" "Portal/" ".purple/" ".wine/" ".gnome/" ".fctsslvpnhistory" ".mongorc.js" ".compiz/" ".davmail.properties")
+
+ ("/home/anajuliapc/work/datascience/bosch/" (23025 46575 487378 809000) "numeric_output.txt" "output_failed_date.txt" "get_part_of_csv.py" "output_failed_numeric.txt" "responses.txt" "teste.txt" "data/" "../" "./" "backup/" "outputs/" "pca_svm.py" "bosch_production.py" "responses1.txt" "failed_ids.csv" "contagem.py" "output_failed_categorical.txt" ".git/" "jupyter/")
+
+ ("/home/anajuliapc/work/datascience/bosch/jupyter/" (22998 9059 743604 967000) "Bosch.ipynb" "../" "./" ".ipynb_checkpoints/")
+
+ ("/home/anajuliapc/naju/crackingthecode/" (22998 11465 248569 601000) "../" "./" "array-left-rotation.py")
+
+ ("/home/anajuliapc/naju/" (22998 10126 252643 787000) "rafael2.jpg" "erik2.jpg" "rafael2.pdf" "mc458/" "../" "rafael1.pdf" "./" "erik2.pdf" "rafael1.jpg" "crackingthecode/" "README.md" "erik1.pdf" "future_app/" "paint/" "configuration/" "screensharing/" "erik1.jpg" "mapeamento.png")
+
+ ("/home/" (22986 32027 702343 620000) "../" "./" "gitlab-runner/" "eldorado/" "marcos/" "anajuliapc/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/brokers/hc/" (22921 58818 645970 426000) "demo2scanner.py" "_version_info.py" "runbroker.py" "../" "__main__.py" "./" "backup.py" "demoscanner.py" "parameters.yaml" "teste.py" "__init__.py" "demo3scanner.py" "beacons" "runlocal.py" "__pycache__/" "local.py" "minhaversao.py")
+
+ ("/home/anajuliapc/work/datascience/bosch/data/" (22923 8616 15965 136000) "train_categorical.csv" "zips/" "train_numeric.csv" "../" "./" "testes/" "train_date.csv")
+
+ ("/home/anajuliapc/work/cepetro/" (22921 58805 865993 426000) "pgm_cepetro.R" "cepetro_tensorflow.py" "data/" "../" "./" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/eldiot/" (22920 25079 632148 167000) "backuuup.py" "../" "./" "__init__.v0.py" "__init__.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/" (22916 34892 540484 73000) "dist/" "eldiot_notify_hc.egg-info/" "build/" "../" "./" "myapp.log" "teste.py" "setup.py" ".git/" "__pycache__/" "log.csv" "eldiot/" "venv/" "eldiot_notification_hc.egg-info/")
+
+ ("/home/anajuliapc/work/datascience/" (22920 20760 933346 75000) "../" "./" "bosch/" "data_analysis_course/")
+
+ ("/home/anajuliapc/work/" (22920 20737 381386 192000) "machine_learning/" "centro-cirurgico/" "../" "./" "datascience/" "tensorflow/" "cepetro/" "eldiot/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-restapi/" (22746 39759 347730 731000) "app.js" "package.json" "../" "./" "ioe.js" "routes.js" "config.js" "README.md" ".gitignore" ".git/" "log.js" ".npmignore" "node_modules/" "venv/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/monitor/hc/" (22794 8836 758599 109000) "log" "_version_info.py" "ble_device.py" "hospital.yaml" "real_hospital.yaml" "../" "./" "room.py" "__init__.py" "dao.py" "new_hospital.yaml" "hospital_with_box.yaml" "hospital_teste.yaml" "hospital_ivedone.yaml" "__pycache__/" "hospital_peter.yaml" "whatIveDone.py")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/monitor/" (22551 25633 241582 3000) "hc/" "../" "./" "__init__.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/eldiot/" (22551 24215 248584 565000) "../" "./" "monitor/" "__init__.py")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor-hc/" (22879 32084 669234 296000) "dist/" "build/" "../" "./" ".gitlab-ci.yml" "README.rst" "eldiot_monitor_hc.egg-info/" "setup.py" ".git/" "eldiot/" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/service/" (22914 7668 859717 86000) "../" "./" "configuration.yaml" "logging.py" "room.py" "scanner.py" "raspberry.py" "aaaaaa.py" "observer.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/" (22913 50788 974383 523000) "_version_info.py" "../" "__main__.py" "./" "__init__.py" "service/" "dao/" "__pycache__/" "model/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/" (22877 7859 193912 747000) "dist/" "build/" ".gitlab-ci.yml" "README.rst" "setup.py" "eldiot_broker_hc.egg-info/" ".gitignore" ".git/" "eldiot/" "venv/" "../" "./")
+
+ ("/home/anajuliapc/work/data_analysis/" (22842 39332 54559 686000) "lesson1/" "../" "./" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/python3.4/site-packages/eldiot_notify_hc-0.0.0.dist-info/" (22869 19593 900519 937000) "metadata.json" "../" "INSTALLER" "./" "WHEEL" "METADATA" "top_level.txt" "entry_points.txt" "RECORD" "DESCRIPTION.rst")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/python3.4/site-packages/" (22869 19593 900519 937000) "easy_install.py" "../" "./" "pkg_resources/" "setuptools-36.0.1.dist-info/" "pip-9.0.1.dist-info/" "wheel-0.30.0a0.dist-info/" "eldiot_notify_hc-0.0.0.dist-info/" "wheel/" "__pycache__/" "setuptools/" "pip/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/python3.4/" (22869 19568 236578 381000) "site.py" "abc.py" "linecache.py" "importlib/" "copy.py" "collections/" "token.py" "plat-x86_64-linux-gnu/" "reprlib.py" "codecs.py" "../" "rlcompleter.py" "./" "tokenize.py" "types.py" "functools.py" "shutil.py" "_bootlocale.py" "stat.py" "io.py" "warnings.py" "sre_compile.py" "sre_constants.py" "imp.py" "__future__.py" "struct.py" "keyword.py" "copyreg.py" "lib-dynload/" "_weakrefset.py" "no-global-site-packages.txt" "hashlib.py" "bisect.py" "base64.py" "ntpath.py" "heapq.py" "_dummy_thread.py" "_collections_abc.py" "weakref.py" "tempfile.py" "fnmatch.py" "orig-prefix.txt" "genericpath.py" "os.py" "site-packages/" "re.py" "operator.py" "encodings/" "__pycache__/" "hmac.py" "random.py" "config-3.4m-x86_64-linux-gnu/" "tarfile.py" "distutils/" "locale.py" "posixpath.py" "sre_parse.py")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/lib/" (22869 19567 948579 38000) "../" "./" "python3.4/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/deletar/" (22869 19574 976563 33000) "include/" "pip-selfcheck.json" "bin/" "../" "./" "lib/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/eldiot-notify-hc/venv/" (22869 19567 936579 65000) "../" "./" "deletar/" "notifications/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/brokers/" (22546 597 493130 986000) "hc/" "../" "./" "__init__.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/" (22477 49481 65786 381000) "brokers/" "../" "./" "__init__.py")
+
+ ("/home/anajuliapc/work/eldiot/" (22866 42074 594787 404000) "status-monitor-hc/" "eldiot-django-app/" "heroku/" "eldiot-client/" "eldiot-broker-weather/" "eldiot-monitor-hc/" "portal/" "eldiot-broker-restapi/" "../" "eldiot-monitor/" "./" "eldiot-framework/" "smartbuilding/" "eldiot_client-0.1-py3-none-any.whl" "eldiot-broker-datascience/" "old-eldiot-centro-cirurgico/" "interface-tv-hc/" "eldiot-broker-mobile/" "eldiot-router/" "eldiot-broker-hc/" "html/" "router-igual-heroku/" "eldiot-broker-smartbuilding/" "eldiot-broker-snap/" "portal-serv113/" "eldiot-vision/" "eldiot_framework-1.3-py2.py3-none-any.whl" "eldiot_framework-2.0.1-py2.py3-none-any.whl" "router-docker/" "eldiot-broker-smartparkinglot/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/" (22866 42074 594787 404000) "python-web-app/" "web-management/" "../" "./" "eldiot-notify-hc/" "rpi-application/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor/eldiot/monitor/" (22866 41443 140232 502000) "_version_info.py" "../" "__main__.py" "./" "__init__.py" "offlinenodes" "__pycache__/")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor/eldiot/" (22477 49243 961969 716000) "../" "./" "monitor/" "__init__.py")
+
+ ("/home/anajuliapc/work/eldiot/eldiot-monitor/" (22555 18225 149188 731000) "dist/" "build/" "../" "./" "eldiot_monitor.egg-info/" ".gitlab-ci.yml" "README.rst" "setup.py" ".git/" "eldiot/" "venv/")
+
+ ("/home/anajuliapc/work/tensorflow/try-tf/simdata/" (22859 56528 972507 735000) "linear_data_train.csv" "moon_data_train.csv" "output_curve_hidden_nodes.txt" "plot_hidden_curve.R" "generate_linear_data.R" "../" "./" "linear_data_train.jpg" "linear_data_eval.csv" "saturn_data_train.csv" "plot_data.R" "saturn_data_train.jpg" "saturn_data_eval.csv" "moon_data_eval.csv" "moon_data_train.jpg" "generate_moon_data.py" "plot_hyperplane.R" ".RData" "generate_saturn_data.R")
+
+ ("/home/anajuliapc/work/tensorflow/try-tf/" (22859 59246 482319 119000) "softmax-py2.py" "LICENSE" "decision_boundary_plots/" "plot_boundary_on_data.pyc" "../" "./" "simdata/" "truncnorm_hidden.py" "README.md" "softmax.py" "hidden.py" "annotated_softmax.py" "softmax_checkpoints.py" ".git/" "__pycache__/" "plot_boundary_on_data.py")
+
+ ("/home/anajuliapc/work/tensorflow/" (22859 56522 340522 840000) "../" "./" "try-tf/" "classification/" "regression/" "mnist/" "venv/")
+
+ ("/home/anajuliapc/work/tensorflow/classification/" (22857 23067 664629 54000) "../" "./" "iris/" "titanic/")
+
+ ("/home/anajuliapc/work/tensorflow/mnist/" (22857 15711 881462 932000) "../" "./" "conceitos.txt" "deep_learning_mnist.py" "mnist_softmax.py")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/model/" (22840 16366 799800 875000) "DeviceType.java" "Transaction.java" "RoomStatus.java" "../" "./" "VwFilteredData.java" "RoomType.java" "DeviceStatus.java" "Device.java" "AcceptedDevice.java" "Raspberry.java" "Room.java")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/repository/" (22840 16366 811800 850000) "IRaspberryRepository.java" "IDeviceStatusRepository.java" "IDeviceRepository.java" "../" "./" "IRoomTypeRepository.java" "IVwFilteredDataRepository.java" "IRoomStatusRepository.java" "IRoomRepository.java" "ITransactionRepository.java" "IAcceptedDeviceRepository.java" "IDeviceTypeRepository.java")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/room/" (22840 16366 839800 788000) "../" "./" "room.jsp")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/service/impl/" (22840 16366 823800 822000) "RaspberryService.java" "../" "AcceptedServiceService.java" "./" "RoomStatusService.java" "DeviceService.java" "RoomService.java" "VwFilteredDataService.java" "DeviceStatusService.java" "RoomTypeService.java" "DeviceTypeService.java" "TransactionService.java")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/controller/api/" (22840 16366 799800 875000) "DeviceTypeResourceController.java" "../" "./" "RoomStatusResourceController.java" "VwFilteredDataResourceController.java" "DeviceResourceController.java" "RoomResourceController.java" "RaspberryResourceController.java" "TransactionResourceController.java" "DeviceStatusResourceController.java" "RoomTypeResourceController.java")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/device/" (22840 16366 839800 788000) "../" "./" "device.js")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/service/" (22840 16366 823800 822000) "IDeviceStatusService.java" "ITransactionService.java" "../" "IDeviceService.java" "./" "IVwFilteredDataService.java" "impl/" "IDeviceTypeService.java" "IRoomService.java" "IRaspberryService.java" "IRoomTypeService.java" "IRoomStatusService.java" "IAcceptedDeviceService.java")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/device/" (22840 16366 831800 806000) "device.jsp" "../" "./")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/room/" (22840 16366 839800 788000) "room.js" "../" "./")
+
+ ("/home/anajuliapc/naju/mc458/" (22852 7913 258898 647000) "../" "./" "get_second_max.py")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/raspberry/" (22840 16372 115789 58000) "raspberry.jsp" "../" "./")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/raspberry/" (22840 16372 115789 58000) "../" "./" "raspberry.js")
+
+ ("/home/anajuliapc/work/tensorflow/regression/grupobimbo/" (22849 12359 619315 742000) "../" "./")
+
+ ("/home/anajuliapc/work/tensorflow/regression/" (22849 12359 619315 742000) "../" "grupobimbo/" "./")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/report/" (22848 13739 955031 523000) "../" "./" "report.js")
+
+ ("/home/anajuliapc/work/machine_learning/tensorflow/kaggle/titanic/" (22846 45676 954077 77000) "test.csv" "../" "./" "train.csv" "gender_submission.csv")
+
+ ("/home/anajuliapc/work/machine_learning/tensorflow/kaggle/" (22846 44938 455711 339000) "../" "./" "titanic/")
+
+ ("/home/anajuliapc/work/machine_learning/tensorflow/tutorials/" (22837 33089 534691 286000) "tutorialhackermoon.py" "linearregression.py" "../" "./" "conceitos.txt" "contrib-learn.py" "gettingstarted.py" "custom-model.py" "data_mnist/" "__pycache__/" "mnist_softmax.py")
+
+ ("/home/anajuliapc/work/machine_learning/tensorflow/" (22846 44932 107726 727000) "portaslogicas/" "kaggle/" "data/" "../" "./" "models/" "tutorials/" "venv/")
+
+ ("/home/anajuliapc/work/machine_learning/" (22842 37183 69133 86000) "../" "./" "tensorflow/" "inteligencia_computacional/")
+
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/tutorials/image/imagenet/" (22842 35880 644501 150000) "BUILD" "classify_image.py" "../" "./")
+
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/tutorials/image/" (22842 35880 644501 150000) "cifar10/" "../" "./" "imagenet/" "__init__.py" "alexnet/" "mnist/")
+
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/tutorials/" (22842 35880 644501 150000) "../" "./" "image/" "__init__.py" "embedding/" "README.md" "rnn/")
+
+ ("/home/anajuliapc/work/tensorflow/image_recognition/models/" (22842 35880 644501 150000) "inception/" "attention_ocr/" "namignizer/" "LICENSE" "neural_gpu/" "WORKSPACE" "textsum/" "differential_privacy/" "adversarial_text/" "lm_1b/" "AUTHORS" "../" "./" "adversarial_crypto/" "CONTRIBUTING.md" "cognitive_mapping_and_planning/" "skip_thoughts/" "ISSUE_TEMPLATE.md" ".gitmodules" "video_prediction/" "domain_adaptation/" "resnet/" "tutorials/" "README.md" ".gitignore" "real_nvp/" "im2txt/" "next_frame_prediction/" "slim/" "neural_programmer/" ".git/" "street/" "transformer/" "learning_to_remember_rare_events/" "syntaxnet/" "swivel/" "autoencoder/" "compression/")
+
+ ("/home/anajuliapc/work/tensorflow/image_recognition/" (22842 35737 788070 834000) "../" "./" "models/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/report/" (22840 16366 839800 788000) "../" "./" "report.jsp")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/template/" (22841 36126 528811 511000) "../" "./" "template.jsp")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/pages/" (22840 16366 839800 788000) "report/" "dashboard/" "../" "./" "template/" "room/" "login/" "raspberry/" "device/" "association/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/" (22840 16366 843800 778000) "report/" "messages.js" "dashboard/" "../" "room_status/" "./" "jquery-1.7.2.min.js" "room/" "roomtype/" "jquery.mask.min.js" "signin.js" "raspberry/" "highcharts.js" "device/" "faq.js" "excanvas.min.js" "association/" "base.js" "jquery.bootstrap-duallistbox.min.js" "bootstrap.js" "device_type/" "transaction/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/" (22840 16366 799800 875000) ".classpath" "build/" ".gradle/" "../" "gradlew" ".settings/" "./" "gradlew.bat" ".project" "build.gradle" "src/" "README.md" ".gitignore" ".git/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/js/dashboard/" (22794 10894 960064 363000) "dashboard.js" "../" "./")
+
+ ("/home/anajuliapc/work/tensorflow/tutorials/" (22837 33089 534691 286000) "tutorialhackermoon.py" "linearregression.py" "../" "./" "conceitos.txt" "contrib-learn.py" "gettingstarted.py" "custom-model.py" "data_mnist/" "__pycache__/" "mnist_softmax.py")
+
+ ("/home/anajuliapc/loganalyse/" (22837 21519 324285 756000) "stdout.3" "stdout.7" "stdout.2" "stdout.5" "../" "stdout.1" "./" "stderr" "stdout" "stdout.6" "stdout.4")
+
+ ("/home/anajuliapc/work/tensorflow/portaslogicas/" (22830 64414 148967 61000) "../" "./" "and.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/tensorflow/data/" (22830 52502 904759 703000) "../" "./" "train-images-idx3-ubyte.gz" "t10k-labels-idx1-ubyte.gz" "train-labels-idx1-ubyte.gz" "t10k-images-idx3-ubyte.gz")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/" (22805 64146 498255 925000) "dist/" "build/" "../" "./" ".gitlab-ci.yml" "eldiot_centro_cirurgico.egg-info/" "centrocirurgico/" "setup.py" ".gitignore" ".git/" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/python-web-app/" (22812 39210 666102 311000) "../" "./" "raspberry.pyc" "runserver.py" "raspberry.py" ".gitignore" "rpi_controller.py" "rpi_controller.pyc" ".git/" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/css/" (22782 10402 102277 550000) "reports.css" "dashboard.css" "font-awesome-ie7.min.css" "base-admin-responsive.css" "bootstrap-duallistbox.css" "../" "./" "bootstrap.css" "bootstrap-responsive.min.css" "faq.css" "font-awesome-ie7.css" "bootstrap.min.css" "signin.css" "plans.css" "font-awesome.min.css" "font-awesome.css" "style.css")
+
+ ("/home/anajuliapc/naju/future_app/" (22741 31342 901082 192000) "../" "./" "mysite/" "paint.py" "README.md" ".gitignore" ".git/" "venv/")
+
+ ("/home/anajuliapc/work/eldiot-broker-hc/eldiot/brokers/hc/" (22792 35649 945510 755000) "demo2scanner.py" "_version_info.py" "runbroker.py" "../" "__main__.py" "./" "backup.py" "demoscanner.py" "parameters.yaml" "teste.py" "__init__.py" "demo3scanner.py" "beacons" "runlocal.py" "__pycache__/" "local.py" "minhaversao.py")
+
+ ("/home/anajuliapc/work/centro-cirurgico/python-web-app/venv/" (22795 17561 956084 949000) "../" "./" "python-web/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-web-app/venv/" (22795 17561 956084 949000) "../" "./" "python-web/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-web-app/" (22795 17561 956084 949000) "../" "./" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/model/" (22755 62126 729358 783000) "../" "transaction.py" "./" "room.py" "device_status.py" "__init__.py" "accepted_device.py" "room_status.py" "raspberry.py" "device.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/rpi-application/centrocirurgico/dao/" (22776 56248 99989 708000) "device_dao.py" "device_status_dao.py" "transaction_dao.py" "../" "./" "room_dao.py" "__init__.py" "connection.py" "accepted_device_dao.py" "raspberry_dao.py" "__pycache__/" "room_status_dao.py")
+
+ ("/home/anajuliapc/work/eldiot-monitor-hc/eldiot/monitor/hc/" (22794 8836 758599 109000) "log" "_version_info.py" "ble_device.py" "hospital.yaml" "real_hospital.yaml" "../" "./" "room.py" "__init__.py" "dao.py" "new_hospital.yaml" "hospital_with_box.yaml" "hospital_teste.yaml" "hospital_ivedone.yaml" "__pycache__/" "hospital_peter.yaml" "whatIveDone.py")
+
+ ("/opt/" (22782 13545 140135 121000) "gitlab/" "gradle/" "forticlient-sslvpn/" "../" "./" "crossbar/" "google/")
+
+ ("/home/anajuliapc/work/eldiot-monitor-hc/eldiot/monitor/" (22551 25633 241582 3000) "hc/" "../" "./" "__init__.py" "__pycache__/")
+
+ ("/home/anajuliapc/work/eldiot-monitor-hc/eldiot/" (22551 24215 248584 565000) "../" "./" "monitor/" "__init__.py")
+
+ ("/home/anajuliapc/work/eldiot-monitor/" (22555 18225 149188 731000) "dist/" "build/" "../" "./" "eldiot_monitor.egg-info/" ".gitlab-ci.yml" "README.rst" "setup.py" ".git/" "eldiot/" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/WEB-INF/" (22782 10402 102277 550000) "pages/" "../" "./" "tiles/")
+
+ ("/home/anajuliapc/work/eldiot-monitor-hc/" (22691 9305 448046 315000) "dist/" "build/" "../" "./" ".gitlab-ci.yml" "README.rst" "eldiot_monitor_hc.egg-info/" "setup.py" ".git/" "eldiot/" "venv/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/webapp/" (22782 10402 206277 743000) "css/" "js/" "img/" "../" "./" "font/" "WEB-INF/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/controller/" (22782 10402 102277 550000) "api/" "../" "./" "RedirectController.java")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/eldorado/" (22782 16620 889867 294000) "SurgerycenterApplication.java" "WebSecurityConfig.java" "../" "./" "service/" "controller/" "repository/" "model/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/org/" (22782 10402 98277 542000) "../" "./" "eldorado/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/br/" (22782 10402 98277 542000) "../" "./" "org/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/java/" (22782 10402 98277 542000) "br/" "../" "./")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/main/" (22782 10402 102277 550000) "webapp/" "../" "./" "resources/" "java/")
+
+ ("/home/anajuliapc/work/centro-cirurgico/web-management/src/" (22782 10402 226277 780000) "main/" "../" "./" "test/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

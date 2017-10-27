@@ -1,0 +1,27 @@
+import os
+
+class RaspberryService(object):
+
+    def __init__(self, db_session):
+        self.db_session = db_session
+
+    def set_ip_almost_working(self, ip, iface='wlan0'):
+        os.system('sudo ifconfig {} {} netmask {} broadcast {}'
+                  .format(iface, ip, netmask, broadcast))
+        os.system('sudo route add default gw {} {}'.format(gateway, iface))
+
+    def set_ip(self, ip):
+        current_ip = os.popen('hostname -I').read().rstrip()
+        if ip == current_ip:
+            print('iguais')
+            return
+        print('diferentes')
+        original = open('/etc/network/interfaces', 'r')
+        new_config = open('/etc/network/interfaces.tmp', 'w+')
+        lines = original.readlines()
+        for line in lines:
+            if 'address' in line:
+                line = str('address '+ip+'\n')
+            new_config.write(line)
+        os.rename(new_config.name, original.name)
+        os.system('sudo ifup eth0')

@@ -1,0 +1,76 @@
+# Machine Learning lessons
+# TensorFlow and TFLearn classifier for the Titanic problem
+#
+
+#
+# Loading Data:
+#
+import numpy as np
+import tflearn
+
+# Donwload the Titanic dataset
+from tflearn.datasets import titanic
+titanic.download_dataset('titanic_dataset.csv')
+
+# Load CSV file, indicate that the first column represents labels
+from tflearn.data_utils import load_csv
+data, labels = load_csv('titanic_dataset.csv', target_column=0,
+                        categorical_labels=True, n_classes=2)
+# O que foi dito acima especifica que os rotulos (sobreviveu ou nao)
+# estao localizados na primeira coluna (id=0)
+# data e labels sao listas em python
+
+#for i in range(50):
+#    print(labels[i])
+
+#
+# Pre-processamento de dados
+#
+
+# Neste caso consiste em deletar colunas que o autor considera inuteis
+def preprocess(passengers, columns_to_delete):
+    # Sort by descending id and delete columns
+    for passenger in sorted(passengers, reverse=True):
+        [passenger.pop(column_to_delete) for column_to_delete in columns_to_delete]
+
+    for i in range(len(passengers)):
+        # Convert 'sex' field to float (id is 1 after removing labels column)
+        passengers[i][1] = 1. if passengers[i][1] == 'female' else 0.
+    #print(np.array(passengers, dtype=np.float32))
+    return np.array(passengers[1], dtype=np.float32)
+
+# Ignore 'name' and 'ticket' columns (id 1 & 6 of data array)
+to_ignore=[1, 6]
+
+# Preprocess data
+data = preprocess(data, to_ignore)
+
+#
+# Build a Deep Neural Network - 3 layers
+#
+net = tflearn.input_data(shape=[None, 6])
+net = tflearn.fully_connected(net, 32)  # layer 1
+net = tflearn.fully_connected(net, 32) # layer 2
+net = tflearn.fully_connected(net, 2, activation='softmax') # layer 3
+net = tflearn.regression(net)
+
+#
+# Training
+#
+# Define model
+model = tflearn.DNN(net)
+# Start training (apply gradient descent algorithm)
+model.fit(data, labels, n_epoch=10, batch_size=16, show_metric=True)
+
+#
+# Try the model
+#
+# Let's create some data for DiCaprio and Winslet
+dicaprio = [3, 'Jack Dawson', 'male', 19, 0, 0, 'N/A', 5.0000]
+winslet = [1, 'Rose DeWitt Bukater', 'female', 17, 1, 2, 'N/A', 100.0000]
+# Preprocess data
+dicaprio, winslet = preprocess([dicaprio, winslet], to_ignore)
+# Predict surviving chances (class 1 results)
+pred = model.predict([dicaprio, winslet])
+print("DiCaprio Surviving Rate:", pred[0][1])
+print("Winslet Surviving Rate:", pred[1][1])

@@ -1,0 +1,108 @@
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            Peter Pennings <peter.pennings@eldorado.org.br>
+#
+
+
+from twisted.internet import defer, reactor
+
+from pkg_resources import resource_stream
+from json import dumps
+from bluepy.btle import Scanner
+
+import yaml
+import datetime
+import os
+
+from .observer import Logger
+
+from .. import _version_info
+
+
+class BLEScanner():
+
+    default_interface = 'br.org.eldorado.sensor.bluetooth.scanner'
+
+    log = Logger.logger('Scanner')
+
+    def __init__(self, raspberry, observable):
+        self._observable = observable
+        self._raspberry = raspberry
+        with resource_stream(__name__, 'configuration.yaml') as stream:
+            self.config = yaml.safe_load(stream)
+        #lista dos macs dos devices para logica de FAR
+        self.near_devices_mac = []
+        self.near_devices = []
+
+    #cria dicionario de devices (mac: threshold)
+    #para ficar em memoria pois eh mais rapido que consultar banco
+    def _accepted_devices_thresholds(self):
+        result_dict = {}
+        for acc_dev in self._raspberry.accepted_devices:
+            result_dict[acc_dev.device.mac_address] = acc_dev.threshold
+        return result_dict
+
+    #cria lista de macs que a raspberry aceita,
+    #para ficar em memoria pois eh mais rapido que consultar banco
+    def _accepted_devices_mac_list(self):
+        result_list = []
+        for acc_dev in self._raspberry.accepted_devices:
+            result_list.append(acc_dev.device.mac_address)
+        return(result_list)
+
+    def _accepted_devices_txpower(self):
+        result_dict = {}
+        for acc_dev in self._raspberry.accepted_devices:
+            result_dict[acc_dev.device.mac_address] = acc_dev.device.tx_power
+        return result_dict
+
+    def scan(self):
+        os.system('sudo service bluetooth restart')
+        print('scanning...')
+        scanner = Scanner(0)
+        accepted_devices_mac_list = self._accepted_devices_mac_list()
+        accepted_devices_thresholds = self._accepted_devices_thresholds()
+        acc_dev_tx_power = self._accepted_devices_txpower()
+        #while True:
+        devices = scanner.scan(10)
+
+        #registra device na sala (NEAR)
+        devices_addr = []
+        for device in devices:
+            devices_addr.append(device.addr)
+            if device.addr in accepted_devices_mac_list:
+                rssi = device.rssi
+                tx_power = acc_dev_tx_power[device.addr]
+                distance = 10**((tx_power-rssi)/20)
+                threshold = accepted_devices_thresholds[device.addr]
+                # NEAR
+                if distance <= threshold:
+                    if device.addr not in self.near_devices_mac:
+                        self.near_devices.append(device)
+                        self.near_devices_mac.append(device.addr)
+                        self.transition(device, 'IN')
+                # FAR
+                else:
+                    if device.addr in self.near_devices_mac:
+                        for dvc in self.near_devices:
+                            if dvc.addr == device.addr:
+                                self.near_devices.remove(dvc)
+                        self.near_devices_mac.remove(device.addr)
+                        self.transition(device, 'OUT')
+
+        # FAR for lost signals
+        for device_on_room in self.near_devices_mac:
+            if device_on_room not in devices_addr:
+                self.near_devices_mac.remove(device_on_room)
+                for device in self.near_devices:
+                    if device_on_room == device.addr:
+                        self.near_devices.remove(device)
+                self.transition(self.near_devices)
+
+        reactor.callLater(self.config['scanner']['interval'],
+                          self.scan)
+
+    def transition(self, event, type):
+        self._observable.update_observers(event, type)

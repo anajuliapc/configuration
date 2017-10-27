@@ -1,0 +1,13 @@
+from ..model.accepted_device import AcceptedDevice
+
+class AcceptedDeviceDao(object):
+
+        def __init__(self, session):
+                self.session = session
+
+        def save(self, accepted_device):
+                self.session.add(accepted_device)
+                self.session.commit()
+
+        def find_by_id(self, id):
+                return self.session.query(AcceptedDevice).get(id)

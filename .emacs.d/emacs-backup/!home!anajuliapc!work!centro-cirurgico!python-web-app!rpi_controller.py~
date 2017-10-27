@@ -1,0 +1,12 @@
+from flask import Flask, jsonify
+from flask_cors import CORS, cross_origin
+
+app = Flask(__name__)
+
+@app.route("/raspberrys")
+@cross_origin()
+def hello():
+    return jsonify("Reboot now!")
+
+if __name__ == "__main__":
+    app.run()

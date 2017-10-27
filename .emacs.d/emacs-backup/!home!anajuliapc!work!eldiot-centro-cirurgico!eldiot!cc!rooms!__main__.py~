@@ -1,0 +1,18 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): João Victor Duarte Martins <joao.martins@eldorado.org.br>
+#            Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#
+
+from . import BrokerHC
+from twisted.internet import reactor
+
+def main():
+
+    reactor.run()
+
+
+if __name__ == '__main__':
+    main()

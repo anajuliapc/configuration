@@ -1,0 +1,13 @@
+from ..model.device import Device
+
+class DeviceDao(object)
+
+        def __init__(self, session):
+                self.session = session
+
+        def save(self, device):
+                self.session.add(device)
+                self.session.commit()
+
+        def find_by_id(self, id):
+                return self.session.query(Device).get(id)

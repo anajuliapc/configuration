@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+
+# eldiot monitor hc
+# Copyright @2016 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Caetano <ana.caetano@eldorado.org.br>,
+#            Paulo Faria <paulo.faria@eldorado.org.br>
+
+import eldiot.framework
+from eldiot.framework import wamp
+
+from ._version_info import __version__
+
+
+class Patient(eldiot.framework.RemoteObject):
+    """Representation of a patient."""
+
+    default_interface = 'br.org.eldorado.patient'
+
+    def __init__(self, broker, ble_device):
+        super(BLEDevice, self).__init__(info['ble_uri'])
+        self._broker = broker
+        self._info = ble_device
+
+    @eldiot.framework.property
+    def bdaddr(self, is_set, value=None):
+        if is_set:
+            return None
+        return self._info['bdaddr']
+
+    @eldiot.framework.property
+    def tx_power(self, is_set, value=None):
+        if is_set:
+            return None
+        return self._info['tx_power']
+
+    @eldiot.framework.property
+    def type(self, is_set, value=None):
+        if is_set:
+            return None
+        return self._info['type']

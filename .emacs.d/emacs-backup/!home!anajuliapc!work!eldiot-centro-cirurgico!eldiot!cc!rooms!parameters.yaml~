@@ -1,0 +1,76 @@
+sample:
+  - time: 0.025
+    maxlen: 1
+    ble_max_offline_time: 60
+    alpha: 0.1
+
+raspberry_pi:
+  - mac: 102763
+    resource: scanner
+  - mac: 102764
+    resource: scanner
+  - mac: 102765
+    resource: scanner
+  - mac: 102766
+    resource: scanner
+  - mac: 102781
+    resource: scanner
+  - mac: 102785
+    resource: scanner
+  - mac: 102780
+    resource: magnetic_sensor
+    magnetic_sensors:
+      # Sala 5
+      - room: 5
+        room_uri: /br/unicamp/hc/surgery5
+        door: A
+        door_uri: /br/org/eldorado/hc/room/5/sensor/magnet/A
+        pin: 37
+      - room: 5
+        room_uri: /br/unicamp/hc/surgery5
+        door: D
+        door_uri: /br/org/eldorado/hc/room/5/sensor/magnet/D
+        pin: 35
+      # Sala 6
+      - room: 6
+        room_uri: /br/unicamp/hc/surgery6
+        door: A
+        door_uri: /br/org/eldorado/hc/room/6/sensor/magnet/A
+        pin: 40
+      - room: 6
+        room_uri: /br/unicamp/hc/surgery6
+        door: C
+        door_uri: /br/org/eldorado/hc/room/6/sensor/magnet/C
+        pin: 36
+      - room: 6
+        room_uri: /br/unicamp/hc/surgery6
+        door: D
+        door_uri: /br/org/eldorado/hc/room/6/sensor/magnet/D
+        pin: 38
+      # Sala 7
+      - room: 7
+        room_uri: /br/unicamp/hc/surgery7
+        door: A
+        door_uri: /br/org/eldorado/hc/room/7/sensor/magnet/A
+        pin: 33
+      - room: 7
+        room_uri: /br/unicamp/hc/surgery7
+        door: D
+        door_uri: /br/org/eldorado/hc/room/7/sensor/magnet/D
+        pin: 31
+      # Sala 8
+      - room: 8
+        room_uri: /br/unicamp/hc/surgery8
+        door: A
+        door_uri: /br/org/eldorado/hc/room/8/sensor/magnet/A
+        pin: 15
+      - room: 8
+        room_uri: /br/unicamp/hc/surgery8
+        door: B
+        door_uri: /br/org/eldorado/hc/room/8/sensor/magnet/B
+        pin: 29
+      - room: 8
+        room_uri: /br/unicamp/hc/surgery8
+        door: D
+        door_uri: /br/org/eldorado/hc/room/8/sensor/magnet/D
+        pin: 13

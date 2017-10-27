@@ -1,0 +1,12 @@
+__author__ = 'gdpr78'
+
+import os
+import sys
+
+from project import app
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 8900))
+    host = 'hc-dev.dsb.eldorado.org.br'
+    app.run(host=host, port=port, use_reloader=False,
+            debug=False, threaded=True)

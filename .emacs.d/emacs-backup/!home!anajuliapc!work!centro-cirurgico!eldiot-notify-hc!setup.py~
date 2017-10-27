@@ -1,0 +1,24 @@
+# 2017 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#
+
+import os
+import subprocess
+
+from setuptools import setup
+
+setup(
+    name='eldiot-notification-hc',
+    description="Notification system to deal with failures",
+    author='Ana Julia Pereira Caetano',
+    author_email='ana.caetano@eldorado.org.br',
+    license='proprietary',
+    setup_requires=['wheel'],
+    packages = ['eldiot'],
+    entry_points={
+        'console_scripts': [
+            'eldiot-notification-hc = eldiot.__init__:main'
+        ]
+    })

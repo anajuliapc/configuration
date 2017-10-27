@@ -1,0 +1,110 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            João Victor Duarte Martins <joao.martins@eldorado.org.br>
+#            Paulo Renato de Faria <paulo.faria@eldorado.org.br>
+#
+
+
+import logging
+import argparse
+
+from twisted.internet import defer, reactor
+
+import os
+import time
+import subprocess
+import atexit
+import signal
+import sys
+import numpy as np
+import psutil
+import collections
+#import RPi.GPIO as io
+
+from pkg_resources import resource_stream
+from json import dumps
+import yaml
+
+from ._version_info import __version__
+from .room import Room
+from .scanner_no_framework import BLEScanner
+
+class BrokerHC():
+
+    log = logging.getLogger(__name__)
+
+    def __init__(self):
+        # if reactor is None:
+        #     from twisted.internet import reactor
+        # self._reactor = reactor
+
+        #super(BrokerHC, self).__init__('eldiot-broker-hc', __version__)
+        with resource_stream(__name__, 'parameters.yaml') as stream:
+            scanner_config = yaml.safe_load(stream)
+        with resource_stream(__name__, 'hospital.yaml') as stream:
+            self.rooms_config = yaml.safe_load(stream)
+        self.raspis = scanner_config['raspberry_pi']
+        print('workingggg')
+        parser = argparse.ArgumentParser(
+            prog='eldiot-centro-cirurgico',
+            description='eldiot broker %(prog)s')
+        self.add_arguments(parser)
+        self.args = parser.parse_args()
+        self.registered_rooms = []
+
+        self.on_connect()
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            'rpi',
+            help='ID to identify this Raspberry Pi')
+
+    def on_connect(self):
+        print(self.args.rpi)
+
+        # Register scanners
+        for rpi in self.raspis:
+            if str(rpi['mac']) == self.args.rpi:
+                if rpi['resource'] == 'scanner':
+                    scanner = BLEScanner(self.args.rpi)
+                    print('Scanner registered: ', scanner.uri)
+
+        # Register rooms
+        for room_cfg in self.rooms_config['hospital_rooms']:
+            room_uri = room_cfg['room_uri']
+            self.set_room(room_cfg)
+
+    @defer.inlineCallbacks
+    def set_room(self, room_config):
+        scanner_uri = room_config['scanner']
+        room_hc = Room(self, room_config)
+        print('Registered room ', room_hc.uri)
+        room_type = room_config['room_type']
+        if room_type == 'pre_surgery':
+            self.pre_op = room_hc
+            room_hc.status = 'PRE_OPERATORIO'
+        elif room_type == 'surgery':
+            self.surgery_room = room_hc
+            room_hc.status = 'LIVRE'
+        else:
+            self.post_op = room_hc
+            room_hc.status = 'RPA'
+        self.set_scanner(scanner_uri, room, room_config)
+        #yield scanner.transition.connect(self.on_transition, room_hc.uri)
+
+    @defer.inlineCallbacks
+    def set_scanner(self, scanner_uri, room, room_config):
+        room.add_resource('scanner', scanner_uri)
+        self.registered_rooms.append(room_config['room_uri'])
+        scanner.set_threshold(room_config['threshold'])
+        # Register BLE devices to each scanner
+        for device in self.config['ble_monitored_devices']:
+            scanner.set_device(device['bdaddr'],
+                               device['tx_power'],
+                               device['type'],
+                               device['ble_uri'])
+        scanner.scan()
+        reactor.callLater(5, self.analyse_consistency, room_config['room_uri'])

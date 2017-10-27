@@ -1,0 +1,13 @@
+from model.transaction import Transaction
+
+class TransactionDao(object):
+
+	def __init__(self, session):
+		self.session = session
+
+	def save(self, transaction):
+		self.session.add(transaction)
+		self.session.commit()
+
+	def find_by_id(self, id):
+		return self.session.query(Transaction).get(id)

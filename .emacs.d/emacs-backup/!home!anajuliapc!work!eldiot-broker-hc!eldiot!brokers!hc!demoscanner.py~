@@ -1,0 +1,60 @@
+# THIS WORKS
+import subprocess
+import re, os, math
+
+os.system('sudo service bluetooth restart')
+q = subprocess.Popen(['hcitool', 'lescan'],stdout=subprocess.PIPE)
+p = subprocess.Popen(['sudo', 'hcidump', '-a'],stdout=subprocess.PIPE)
+
+# beacons3 = ['E9:A8:AF:75:05:2C', '2C:10:5C:B0:84:F6', 'DA:29:71:A1:D4:97',
+#             '30:77:EB:EE:1D:0D', '80:7A:BF:15:C7:4B', '80:7A:BF:15:C8:8A',
+#             'FD:3C:04:B6:A8:18', 'CC:76:C2:14:D8:15', 'C3:6B:F1:8B:88:8E']
+# nurses = ['D6:40:8E:E8:74:B6', 'DF:FB:04:29:3D:88']
+# patients = ['C8:0F:10:69:23:C2', 'C8:0F:10:5B:29:08', 'C8:0F:10:5B:28:B9',
+#             'C8:0F:10:5A:CE:69', 'C8:0F:10:6B:4B:FB', 'C8:0F:10:69:0B:1B']
+# cleaning = ['C3:6B:F1:8B:88:8E', 'E9:A8:AF:75:05:2C', 'CC:76:C2:14:D8:15']
+
+#new_bands = ['C8:0F:10:68:D5:96']#, 'C8:0F:10:68:F7:93']
+
+#old_bands = ['C8:0F:10:5A:CE:69']#, 'C8:0F:10:6B:4B:FB', 'C8:0F:10:69:0B:1B']
+
+new_beacons = ['F0:06:C8:22:8F:29', 'ED:24:2F:2E:4C:A9', 'F3:78:83:BC:8E:9A']
+
+doors = []
+
+beacons = ['F0:06:C8:22:8F:29']
+
+for addr in beacons:
+    addr = addr.replace(':', '')
+    print(addr)
+
+match = None
+counter = 0
+sum = 0
+try:
+    for line in iter(p.stdout.readline, ''):
+        line = str(line.rstrip())
+        #print(line)
+        if match is not None:
+            if 'RSSI' in line:
+                x = re.findall('[-][0-9][0-9]', line)
+                RSSI = float(x[0])
+                counter = counter + 1
+                sum = RSSI + sum
+                avg = sum / counter
+                tx = -70
+                distance = float('{}'.format(10**((tx-RSSI)/20)))
+                print(match + ' : ' + str(RSSI))
+                #print('avg for ' + str(counter) + ' items: ' + str(avg))
+                #print(match + ' - distance: ' + str(distance) + 'm')
+                match = None
+        for addr in beacons:
+            if addr in line:
+                match = addr
+
+except KeyboardInterrupt:
+    p.kill()
+    q.kill()
+
+p.wait()
+p.stdout.close()

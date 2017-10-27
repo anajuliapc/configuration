@@ -1,0 +1,12 @@
+from model import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+class RoomStatus(Base):
+
+	__tablename__ = 'room_status'
+
+	id = Column(Integer, primary_key=True)
+	status = Column(String)
+	room_id = Column(Integer, ForeignKey("room.id"))
+	room = relationship("Room", back_populates="room_status")

@@ -1,0 +1,13 @@
+from model.device_status import DeviceStatus
+
+class DeviceStatusDao(object):
+
+	def __init__(self, session):
+		self.session = session
+
+	def save(self, device_status):
+		self.session.add(device_status)
+		self.session.commit()
+
+	def find_by_id(self, id):
+		self.session.query(DeviceStatus).get(id)

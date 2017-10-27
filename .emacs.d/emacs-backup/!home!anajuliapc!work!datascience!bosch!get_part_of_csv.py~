@@ -1,0 +1,21 @@
+import csv
+
+files = ['data/train_date.csv',
+         'data/train_categorical.csv',
+         'data/train_numeric.csv']
+
+outputs = ['part_train_date.csv',
+           'part_train_categorical.csv',
+           'part_train_numeric.csv']
+
+for i in range(3):
+    with open(files[i], 'r') as f1, open(outputs[i], 'a') as f2:
+        reader = csv.reader(f1)
+        writer = csv.writer(f2)
+        count = 0
+        for row in reader:
+            count += 1
+            if count > 100:
+                break
+            else:
+                writer.writerow(row)

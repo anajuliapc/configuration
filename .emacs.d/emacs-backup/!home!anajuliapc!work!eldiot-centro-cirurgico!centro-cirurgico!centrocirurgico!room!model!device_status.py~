@@ -1,0 +1,12 @@
+from model import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+class DeviceStatus(Base):
+
+	__tablename__ = 'device_status'
+
+	id = Column(Integer, primary_key=True)
+	status = Column(String)
+	device_id = Column(Integer, ForeignKey("device.id"))
+	device = relationship("Device", back_populates="device_status") 

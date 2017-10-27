@@ -1,0 +1,116 @@
+# eldiot - eldorado's middleware for the internet of things
+# Copyright © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Peter Pennings <peter.pennings@eldorado.org.br>
+
+import psycopg2
+from twisted.internet import defer, reactor
+from pkg_resources import resource_stream
+import yaml
+import datetime
+
+""" Database connection
+
+There is just one object of this class,
+(singleton design pattern)
+"""
+class Connection(object):
+
+    def __init__(self):
+        with resource_stream(__name__, 'hospital.yaml') as stream:
+            self.config = yaml.safe_load(stream)
+        self._set_connection(self.config['database'])
+
+    #singleton
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, '_instance'):
+                cls._instance = super(Connection, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def _set_connection(self, config):
+        self.connection = psycopg2.connect(
+            "dbname='{}' user='{}' host='{}' password='{}' port='{}'"
+            .format(config['database'],
+                    config['user'],
+                    config['hostname'],
+                    config['password'],
+                    config['port']))
+        self.connection.autocommit = True
+
+    def get_connection(self):
+        return self.connection
+
+""" Database interface to Door objects
+
+Receive a singleton connection object
+"""
+class DoorDao(object):
+
+    def __init__(self, db_connection):
+        self.connection = db_connection
+
+    @defer.inlineCallbacks
+    def insert(self, room_uri, door, door_uri, status, _timestamp):
+        cursor = self.connection.cursor()
+        sql_statment = "INSERT INTO hc_door_activity( \
+                        room_uri, door, door_uri, status, _datetime) \
+                        VALUES ('{}', '{}', '{}', '{}', '{}');" \
+                        .format(room_uri, door, door_uri, status, _timestamp)
+        yield cursor.execute(sql_statment)
+
+    def update(self, id, room, door, status, _timestamp):
+        pass
+
+    def delete(self, id):
+        pass
+
+    def get_by_id(self, id):
+        pass
+
+
+""" Database interface to HCFlow objects
+
+Receive a singleton connection object
+"""
+class HCFlowDao(object):
+
+    def __init__(self, db_connection):
+        self.connection = db_connection
+
+    @defer.inlineCallbacks
+    def insert(self, hc_flow_dictionary):
+        cursor = self.connection.cursor()
+        sql_statment = "INSERT INTO hc_flow( \
+                        room_uri, room_type, \
+                        transition_type, room_status,  \
+                        device_uri, \
+                        _datetime, device_proximity, \
+                        device_bdaddr, device_type, \
+                        device_rssi) \
+                        VALUES ('{room_uri}', '{room_type}', \
+                        '{transition_type}', '{room_status}', \
+                        '{device_uri}', '{_datetime}', '{device_proximity}', \
+                        '{device_bdaddr}', '{device_type}', \
+                        {device_rssi});".format(
+                        room_uri=hc_flow_dictionary['room_uri'],
+                        room_type=hc_flow_dictionary['room_type'],
+                        transition_type=hc_flow_dictionary['transition_type'],
+                        room_status=hc_flow_dictionary['room_status'],
+                        device_uri=hc_flow_dictionary['device_uri'],
+                        _datetime=datetime.datetime.now(),
+                        device_proximity=hc_flow_dictionary['device_proximity'],
+                        device_bdaddr=hc_flow_dictionary['device_bdaddr'],
+                        device_type = hc_flow_dictionary['device_type'],
+                        device_rssi = hc_flow_dictionary['device_rssi']
+                        )
+        yield cursor.execute(sql_statment)
+
+    def update(self):
+        pass
+
+    def delete(self, id):
+        pass
+
+    def get_by_id(self, id):
+        pass

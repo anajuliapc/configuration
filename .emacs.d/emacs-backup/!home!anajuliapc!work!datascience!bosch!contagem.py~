@@ -1,0 +1,5 @@
+files = ['data/train_date.csv',
+         'data/train_categorical.csv',
+         'data/train_numeric.csv']
+
+for filename in files:

@@ -1,0 +1,125 @@
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            Peter Pennings <peter.pennings@eldorado.org.br>
+#
+
+
+from twisted.internet import defer, reactor
+
+from pkg_resources import resource_stream
+from json import dumps
+from bluepy.btle import Scanner
+
+import yaml
+import time
+import os
+
+from ..observer import Logger
+
+from .. import _version_info
+
+
+class BLEScanner():
+
+    default_interface = 'br.org.eldorado.sensor.bluetooth.scanner'
+
+    log = Logger.logger('Scanner')
+
+    def __init__(self, raspberry, observable):
+        self._observable = observable
+        self._raspberry = raspberry
+        with resource_stream(__name__, 'configuration.yaml') as stream:
+            self.config = yaml.safe_load(stream)
+        #TODO: colocar isso de maneira melhor
+        #lista dos macs dos devices para logica de FAR
+        self.devices_mac = []
+
+        #TODO: mudar este atributo para classe Room
+        self.room_devices = []
+
+    #cria dicionario de devices (mac: id)
+    #para ficar em memoria pois eh mais rapido que consultar banco
+    def _accepted_devices_mac_id_dictionary(self):
+        result_dict = {}
+        for acc_dev in self._raspberry.accepted_devices:
+            result_dict[acc_dev.device.mac_address] = acc_dev.device.id
+            return result_dict
+
+    #cria dicionario de devices (mac: rssi)
+    #para ficar em memoria pois eh mais rapido que consultar banco
+    def _accepted_devices_mac_rssi_dictionary(self):
+        result_dict = {}
+        for acc_dev in self._raspberry.accepted_devices:
+            result_dict[acc_dev.device.mac_address] = acc_dev.rssi_limit
+            return result_dict
+
+    #cria lista de macs que a raspberry aceita,
+    #para ficar em memoria pois eh mais rapido que consultar banco
+    def _accepted_devices_mac_list(self):
+        result_list = []
+        for acc_dev in self._raspberry.accepted_devices:
+            result_list.append(acc_dev.device.mac_address)
+            return result_list
+
+    def scan(self):
+        os.system('sudo service bluetooth restart')
+        print('scanning...')
+        scanner = Scanner(0)
+        accepted_devices_mac_list = self._accepted_devices_mac_list()
+        accepted_devices_mac_id_dict = self._accepted_devices_mac_id_dictionary()
+        accepted_devices_mac_rssi_dict = self._accepted_devices_mac_rssi_dictionary()
+
+        #while True:
+        devices = scanner.scan(10)
+        threshold = 2 # em metros
+
+        for device in accepted_devices_mac_list:
+            print('Accepted: ')
+            print(device)
+
+        #registra device na sala (NEAR)
+        for device in devices:
+            rssi = device.rssi
+            txpower = -70
+            distance = 10**((txpower-rssi)/20)
+            if(device.addr in accepted_devices_mac_list):
+                print('accepted found: {}'.format(device.addr))
+            if(device.addr in accepted_devices_mac_list
+               and distance <= threshold):
+                print('{}'.format(device.addr))
+                self.devices_mac.append(device.addr)
+                if(device.addr not in self.room_devices):
+                    #cria transaction
+                    transaction = Transaction(
+                        device_id = accepted_devices_mac_id_dict[device.addr],
+                        room_id = self._raspberry.room.id,
+                        type = 'IN',
+                        datetime = datetime.datetime.now())
+                    self.transaction_dao.save(transaction)
+                    self.room_devices.append(device.addr)
+                    print('{} : {}'.format(device.addr, device.rssi))
+                    self.transition()
+
+            #remove device da sala (FAR)
+            macs_to_remove = []
+            for device_in_room in self.room_devices:
+                print('DEVICE IN ROOM: {}'.format(device_in_room))
+                if(device_in_room not in self.devices_mac):
+                    macs_to_remove.append(device_in_room)
+                for mac in macs_to_remove:
+                    print('DEVICE TO REMOVE: {}'.format(mac))
+                    transaction = Transaction(
+                        device_id = accepted_devices_mac_id_dict[mac],
+                        room_id = self._raspberry.room.id,
+                        type = 'OUT',
+                        datetime = datetime.datetime.now())
+                    self.transaction_dao.save(transaction)
+                    self.room_devices.remove(mac)
+
+        reactor.callLater(self.config['scanner']['interval'], self.scan)
+        #time.sleep(self.config['scanner']['interval'])
+
+    def transition(self, event):
+        self._observable.update_observers(event)

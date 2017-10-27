@@ -1,0 +1,8 @@
+# Machine Learning lessons
+# TensorFlow and TFLearn classifier for the Titanic problem
+#
+
+# Loading Data:
+
+import numpy as np
+import tflearn

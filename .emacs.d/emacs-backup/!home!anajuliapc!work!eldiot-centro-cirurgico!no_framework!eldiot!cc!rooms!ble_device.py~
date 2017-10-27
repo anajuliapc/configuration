@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+
+# eldiot monitor hc
+# Copyright @2016 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Caetano <ana.caetano@eldorado.org.br>,
+#            Paulo Faria <paulo.faria@eldorado.org.br>
+
+from ._version_info import __version__
+
+
+class BLEDevice():
+    """Representation of a bluetooth low energy device."""
+
+    def __init__(self, bdaddr, tx_power, type):
+        self._bdaddr = bdaddr
+        self._tx_power = tx_power
+        self._type = type
+
+    @property
+    def bdaddr(self):
+        return self._bdaddr
+
+    @property
+    def tx_power(self):
+        return self._tx_power
+
+    @property
+    def type(self):
+        return self._type

@@ -1,0 +1,288 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            João Victor Duarte Martins <joao.martins@eldorado.org.br>
+#            Paulo Renato de Faria <paulo.faria@eldorado.org.br>
+#
+
+
+import logging
+import argparse
+
+from twisted.internet import defer, reactor
+
+import os
+import time
+import subprocess
+import atexit
+import signal
+import sys
+import psutil
+import collections
+
+from pkg_resources import resource_stream
+from json import dumps
+import yaml
+
+from ._version_info import __version__
+
+
+class BLEScanner():
+
+    default_interface = 'br.org.eldorado.sensor.bluetooth.scanner'
+
+    log = logging.getLogger(__name__)
+    logging.basicConfig(filename='BLEScanner.log',level=logging.INFO)
+
+    def __init__(self, rpi_id, observable):
+        self.uri = '/br/org/eldorado/rpi/{}/sensor/bluetooth/scanner' \
+                   .format(rpi_id)
+        self._observable = observable
+        self._devices = []
+        self.all_devices = []
+        self.threshold = None
+        self.distance = {}
+        self.filtered_distances = {}
+        self.proximity = {}
+        self._should_be_restarted = False
+        with resource_stream(__name__, 'parameters.yaml') as stream:
+            config = yaml.safe_load(stream)
+        self.parameters = config['sample']
+        self.consensus_len = 25 #fallback
+        for parameter in self.parameters:
+            self.consensus_len = parameter['maxlen']
+        self.time_elapsed = {}
+        self.last_packet_received = {}
+
+    def scan(self):
+        os.system('sudo hciconfig hci0 down')
+        os.system('sudo service bluetooth restart')
+        #os.system('sudo service dbus restart')
+        os.system('sudo hciconfig hci0 up')
+        self._should_be_restarted = True
+        self._kill_proc_by_name('hcitool')
+        self._kill_proc_by_name('hcidump')
+        self.hcitool = subprocess.Popen(['hcitool', 'lescan'],
+                                        stdout=subprocess.PIPE)
+        reactor.callLater(0.5, self._scan)
+        # Register to be killed
+        atexit.register(self._kill_proc_by_name, 'hcitool')
+        atexit.register(self._kill_proc_by_name, 'hcidump')
+        atexit.register(self._delete_log)
+        # Verify if BLE Device still online
+        for parameter in self.parameters:
+            seconds = parameter['ble_max_offline_time']
+            self._stopwatch(seconds)
+
+    def _scan(self):
+        logfile = 'log'+time.strftime("%Y-%m-%dT%H:%M:%S")
+        self.f = open(logfile, 'w+')
+        self.hcidump = subprocess.Popen(['sudo',
+                                         'hcidump',
+                                         '-a'],
+                                        stdout = self.f)
+        reactor.callLater(60*60, self._restart_scan, logfile)
+        self._read_packets(logfile)
+
+    def stop_scan(self):
+        #Do not call _restart_scan anymore
+        self._should_be_restarted = False
+        # kill hcitool and hcidump
+        try:
+            self.log.info('stop_process',
+                          'Stopping hci tool process')
+            self._kill_proc_by_name('hcitool')
+        except:
+            self.log.error('Unexpected error:', sys.exc_info()[0])
+            raise Exception('Could not kill hcitool process')
+        try:
+            self.log.info('stop_process',
+                          'Stopping hci dump process')
+            self._kill_proc_by_name('hcidump')
+        except:
+            self.log.error('Unexpected error:', sys.exc_info()[0])
+            raise Exception('Could not kill hcidump process')
+        self._stop_scan()
+
+    def _stop_scan(self):
+        try:
+            self._kill_proc_by_name('hcidump')
+        except:
+            self.log.error("Unexpected error:", sys.exc_info()[0])
+            raise Exception('Could not kill hcidump process')
+
+    def _restart_scan(self, logfile):
+        self._stop_scan()
+        self._delete_log()
+        if self._should_be_restarted:
+           self._scan()
+
+    def _delete_log(self):
+        self.f.close()
+        os.system('sudo rm -f log*')
+
+    def _kill_proc_by_name(self, process_name):
+       '''Guarantee only one process is running at a given moment'''
+       for proc in psutil.process_iter():
+           # check whether the process name matches
+           if proc.name() == process_name:
+              proc.kill()
+
+    def _read_packets(self, logfile, last_line_read=0, last_size=0):
+        if os.path.isfile(logfile):
+            size = os.path.getsize(logfile)
+            if size > last_size:
+                lines = open(logfile, 'r').readlines()
+                new_lines = 0
+                bdaddr = None
+                for line in lines[last_line_read:]:
+                    new_lines = new_lines + 1
+                    if 'bdaddr' in line:
+                        for addr in self._devices:
+                            if addr['bdaddr'] in line:
+                                bdaddr = line.split()[-2]
+                    if bdaddr:
+                        packet = {}
+                        packet['bdaddr'] = bdaddr
+                        for device in self._devices:
+                            if bdaddr == device['bdaddr']:
+                                txpower = device['txpower']
+                                packet['ble_type'] = device['type']
+                                packet['ble_uri'] = device['uri']
+                        packet['tx_power'] = float(txpower)
+                        if 'RSSI' in line:
+                            rssi = int(line.split()[-1])
+                            packet['rssi'] = float(rssi)
+                            distance = 10**((txpower-rssi)/20)
+                            packet['distance'] = distance
+                            self._packet_received(packet)
+                            packet.clear()
+                            bdaddr = None
+                last_line_read = last_line_read + new_lines
+                last_size = size
+            reactor.callLater(1,
+                              self._read_packets,
+                              logfile,
+                              last_line_read,
+                              last_size)
+        else:
+            reactor.callLater(1, self._read_packets, logfile)
+
+    def _packet_received(self, packet):
+        bdaddr = packet['bdaddr']
+        self.time_elapsed[bdaddr] = time.time()
+        self.last_packet_received[bdaddr] = packet.copy()
+        for device in self._devices:
+            if bdaddr == device['bdaddr']:
+                self._analyse_proximity(packet)
+                self._devices.remove(device)
+                for parameter in self.parameters:
+                    interval = parameter['time']
+                reactor.callLater(interval, self._add_device_back, device)
+
+    def _add_device_back(self, device):
+        if device not in self._devices:
+            self._devices.append(device)
+
+    @defer.inlineCallbacks
+    def _stopwatch(self, seconds):
+        for bdaddr in self.time_elapsed:
+            if self.proximity[bdaddr] == 'NEAR':
+                elapsed = time.time() - self.time_elapsed[bdaddr]
+                if elapsed > seconds:
+                    self.log.info('transition',
+                                  "BLE's signal lost. Assumed FAR")
+                    self.proximity[bdaddr] = 'FAR'
+                    packet = self.last_packet_received[bdaddr]
+                    yield self.transition(packet)
+        reactor.callLater(5, self._stopwatch, seconds)
+
+    def _low_pass_filter(self, prev_signal, cur_signal):
+        for parameter in self.parameters:
+            alpha = parameter['alpha']
+        y = prev_signal + alpha * (cur_signal - prev_signal)
+        return y
+
+    @defer.inlineCallbacks
+    def _analyse_proximity(self, packet):
+        def _errback(failure):
+            print('Failed to emit threshold detected: {failure}',
+                failure=failure)
+        bdaddr = packet['bdaddr']
+        current_distance = packet['distance']
+        threshold = self.threshold
+        if bdaddr not in self.distance:
+            self.distance[bdaddr] = current_distance
+            self.filtered_distances[bdaddr] = collections \
+                 .deque(maxlen=self.consensus_len)
+            if current_distance > threshold:
+                self.proximity[bdaddr] = 'FAR'
+            else:
+                self.proximity[bdaddr] = 'NEAR'
+            yield self.transition(packet, True)
+            print('Device detected:', bdaddr, 'is', self.proximity[bdaddr])
+        else:
+            previous_distance = self.distance[bdaddr]
+            self.distance[bdaddr] = self._low_pass_filter(previous_distance,
+                                                          current_distance)
+            self.filtered_distances[bdaddr].append(self.distance[bdaddr])
+            consensus_distances = list(self.filtered_distances[bdaddr])
+            if (len(consensus_distances) == self.consensus_len and
+                    all(i > threshold for i in consensus_distances)):
+                # self.log.info('proximity',
+                #     'FAR detected for bdaddr {}. Consensus Distances= {}'
+                #     .format(bdaddr, consensus_distances))
+                if self.proximity[bdaddr] == 'NEAR':
+                    self.proximity[bdaddr] = 'FAR'
+                    yield self.transition(packet)
+            elif (len(consensus_distances) == self.consensus_len and
+                      all(i <= threshold for i in consensus_distances)):
+                # self.log.info('proximity',
+                #     'NEAR detected for bdaddr {}. Consensus Distances= {}'
+                #     .format(bdaddr, consensus_distances))
+                if self.proximity[bdaddr] == 'FAR':
+                    self.proximity[bdaddr] = 'NEAR'
+                    yield self.transition(packet)
+            # elif len(consensus_distances) == self.consensus_len:
+            #     self.log.info('proximity',
+            #         'Current Distance {}. Mixed NEAR/FAR for bdaddr {}. ' \
+            #         'Consensus Distances= {}'.format(current_distance,
+            #                                          bdaddr,
+            #                                          consensus_distances))
+
+    def transition(self, packet, first_check=False):
+        bdaddr = packet['bdaddr']
+        packet['proximity'] = self.proximity[bdaddr]
+        self.log.info('Transition detected: {} is {}'
+                      .format(bdaddr, self.proximity[bdaddr]))
+        # Call room method to update status. How?
+        # callback(bdaddr, distance)
+        print('transitioned')
+        self._observable.update_observers(packet, first_check)
+
+    def set_threshold(self, value):
+        """:value threshold limit
+            (associated to distance from packet) """
+        self.threshold = value
+
+    def get_threshold(self):
+        return self.threshold
+
+    def set_device(self, bdaddr, tx_power, type_of_device, uri):
+        device = {'bdaddr': bdaddr,
+                  'txpower': tx_power,
+                  'type': type_of_device,
+                  'uri': uri}
+        if device not in self.all_devices:
+            self.all_devices.append(device)
+            self._devices.append(device)
+
+    def proximity(self):
+        return self.proximity
+
+    def devices(self, is_set, value=None):
+        if is_set:
+            return None
+        return self.all_devices

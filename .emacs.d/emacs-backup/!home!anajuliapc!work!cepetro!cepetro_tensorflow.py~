@@ -1,0 +1,10 @@
+import tensorflow as tf
+
+# Read data
+
+
+# Model 1: Generalized Linear Model
+
+# Model 2: Linear model
+
+# Model 3: Linear model using only inclination = 90 dregrees

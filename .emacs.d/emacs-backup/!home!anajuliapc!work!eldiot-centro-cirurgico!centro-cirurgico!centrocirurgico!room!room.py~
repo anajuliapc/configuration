@@ -1,0 +1,284 @@
+# -*- coding: utf-8 -*-
+
+# eldiot monitor hc
+# Copyright @2016 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Caetano <ana.caetano@eldorado.org.br>,
+#            Peter Pennings
+
+import time
+
+from twisted.internet import reactor
+
+from .ble_device import BLEDevice
+from .. import observer
+
+# # Singleton data base connection object
+# db_connection = Connection().get_connection()
+
+
+class Room(object):
+    """Representation of a room in the hospital."""
+
+    default_interface = 'br.org.eldorado.room.hospital'
+
+    log = observer.Logger.logger('Room')
+
+    def __init__(self, observable, room_cfg, type):
+#        self.uri = room_cfg['room_uri']
+        self._observable = observable
+        self._info = room_cfg
+        self._type = type
+        #: Lists of resources (e.g.: bluetooth scanners).
+        self.devices = []
+        self._status = None
+        self._patient_on_room = None
+        self._cleaning_status = False
+        self._scanner = None
+
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+
+    @property
+    def scanner(self):
+        return self._scanner
+
+    @scanner.setter
+    def scanner(self, value):
+        self._scanner = value
+
+    @property
+    def type(self):
+        """ Room type could be:
+
+        (pre-operatory, surgery, post-operatory)"""
+        return self._type
+
+    @property
+    def patient_on_room(self):
+        return self._patient_on_room
+
+    @patient_on_room.setter
+    def patient_on_room(self, value):
+        self._patient_on_room = value
+
+    @property
+    def needs_cleaning(self):
+        return self._cleaning_status
+
+    @needs_cleaning.setter
+    def needs_cleaning(self, value):
+        self._cleaning_status = value
+
+    def devices_on_room(self):
+        return self.devices
+
+    def add_device(self, device):
+        self.log.info('Add device')
+        if device not in self.devices:
+            self.devices.append(device)
+        self.log.info('{}'.format(self.devices))
+
+    def remove_device(self, device):
+        self.log.info('Remove device')
+        for item in self.devices:
+            if item == device:
+                self.devices.remove(device)
+        self.log.info('{}'.format(self.devices))
+
+    def _push_event(self, packet, transition):
+        event = {
+            'room_uri': self.uri,
+            'room_type': self.type,
+            'room_status': self.status,
+            'transition_type': transition,
+            'device_uri': packet['ble_uri'],
+            'device_bdaddr': packet['bdaddr'],
+            'device_type': packet['ble_type'],
+            'device_proximity': packet['proximity'],
+            'device_rssi': packet['rssi']
+        }
+        self.hc_flow_dao.insert(event)
+
+
+class PreSurgeryRoom(Room):
+
+    def __init__(self, observable, room_config):
+        super().__init__(observable, room_config, 'pre_surgery')
+
+    def on_transition(self, packet):
+        self.log.info('Transition on pre surgery')
+        bdaddr = packet['bdaddr']
+        ble_type = packet['ble_type']
+        proximity = packet['proximity']
+        if ble_type == 'patient' and proximity == 'FAR':
+            # start patient
+            # start flow
+            self._push_event(packet, 'PatientOut')
+
+
+class PostSurgeryRoom(Room):
+
+    def __init__(self, observable, room_config):
+        super().__init__(observable, room_config, 'post_surgery')
+
+    def on_transition(self, packet):
+        self.log.info('Transition on post surgery')
+        bdaddr = packet['bdaddr']
+        ble_type = packet['ble_type']
+        proximity = packet['proximity']
+        if ble_type == 'patient' and proximity == 'NEAR':
+            # end patient
+            # end flow?
+            self._push_event(packet, 'PatientIn')
+
+
+class SurgeryRoom(Room):
+
+    def __init__(self, observable, room_config):
+        super().__init__(observable, room_config, 'surgery')
+        self._priority_dict = {
+            'patient': 3,
+            'box': 2,
+            'cleaning': 1,
+            None: 0
+        }
+
+    def on_transition(self, first_check=False):
+        self.log.info('transition received')
+        # ble_type = packet['ble_type']
+        # new_priority = self._priority_dict[ble_type]
+        # self.log.info('New priority: {}'.format(new_priority))
+        # greatest_on_room = self._get_greatest_priority_type()
+        # current_priority = self._priority_dict[greatest_on_room]
+        # self.log.info('Current priority: {}'.format(current_priority))
+        # proximity = packet['proximity']
+        # if proximity == 'NEAR':
+        #     self.add_device(packet['ble_uri'])
+        #     event = 'entered'
+        # else:
+        #     self.remove_device(packet['ble_uri'])
+        #     event = 'left'
+        # self.log.info('Beacon {0} {3} room {1} at {2}'
+        #       .format(packet['ble_uri'],
+        #               self.uri,
+        #               time.strftime("%Y-%m-%dT%H:%M:%S"),
+        #               event))
+        # transition = None
+        # if new_priority >= current_priority:
+        #     if proximity == 'NEAR':
+        #         if ble_type == 'patient':
+        #             if not self.patient_on_room:
+        #                 self.patient_on_room = packet['ble_uri']
+        #                 transition = 'PatientIn'
+        #                 self.needs_cleaning = True
+        #         elif ble_type == 'box':
+        #             transition = 'BoxIn'
+        #         elif ble_type == 'cleaning':
+        #             # needs_cleaning = self.needs_cleaning
+        #             # if needs_cleaning or first_check:
+        #             transition = 'CleaningIn'
+        #     else:
+        #         if ble_type == 'patient':
+        #             if first_check:
+        #                 self.log.info('First check')
+        #                 if packet['ble_uri'] == self.patient_on_room:
+        #                     self.patient_on_room = None
+        #                     transition = 'PatientOut'
+        #             else:
+        #                 self.log.info('Not first check')
+        #                 self.log.info('Check if signal is really lost')
+        #                 seconds = 2*60
+        #                 self.add_device(packet['ble_uri'])
+        #                 reactor.callLater(seconds,
+        #                                   self._check_signal_lost,
+        #                                   **packet)
+        #         elif ble_type == 'box':
+        #             transition = 'BoxOut'
+        #         elif ble_type == 'cleaning':
+        #             transition = 'CleaningOut'
+        # self._ensure_consistency(transition, packet)
+
+    def _ensure_consistency(self, transition, packet):
+        self.log.info('Ensuring consistency')
+        greatest_on_room = self._get_greatest_priority_type()
+        self.log.info('Transition: {}'.format(transition))
+        self.log.info('Greatest priority: {}'.format(greatest_on_room))
+        if transition == 'PatientOut':
+            if greatest_on_room != 'box':
+                transition = 'BoxOut'
+                self._ensure_consistency(transition, packet)
+                return
+        elif transition == 'BoxOut':
+            if greatest_on_room == 'cleaning':
+                transition = 'CleaningIn'
+                self._ensure_consistency(transition, packet)
+                return
+            elif greatest_on_room == 'box':
+                transition = 'BoxIn'
+                self._ensure_consistency(transition, packet)
+                return
+            else:
+                self.log.info('Needs cleaning: {}'.format(self.needs_cleaning))
+                if not self.needs_cleaning:
+                    transition = 'CleaningOut'
+                    self._ensure_consistency(transition, packet)
+                    return
+        elif transition == 'CleaningOut':
+            self.needs_cleaning = False
+            self.log.info('Needs cleaning: {}'.format(self.needs_cleaning))
+        elif transition == None:
+            self.log.info('Status: {}'.format(self.status))
+            self._push_event(packet, 'None')
+            return
+        self.status = self._get_room_status(transition)
+        self.log.info('Status: {}'.format(self.status))
+        self._push_event(packet, transition)
+
+    def _get_greatest_priority_type(self):
+        current_priority = 0
+        ble_type = None
+        for device_uri in self.devices:
+            ble_type = self._get_ble_type(device_uri)
+            if self._priority_dict[ble_type] > current_priority:
+                current_priority = self._priority_dict[ble_type]
+        return ble_type
+
+    def _get_ble_type(self, uri):
+        ble_type = None
+        devices = self._observable.get_registered_bles()
+        for device in devices:
+            if device.uri == uri:
+                ble_type = device.type
+        return ble_type
+
+    def _get_room_status(self, transition):
+        status = {
+            'PatientIn': 'OPERANDO',
+            'PatientOut': 'AGUARDANDO_RETIRADA_MATERIAIS',
+            'BoxIn': 'LIVRE',
+            'BoxOut': 'AGUARDANDO_LIMPEZA',
+            'CleaningIn': 'LIMPANDO',
+            'CleaningOut': 'PREPARANDO'
+        }
+        return status[transition]
+
+    def _check_signal_lost(self, **packet):
+        self.log.info('Verifying lost signal')
+        scanner = self.scanner
+        proximities = scanner.proximity
+        proximity = [proximities[addr] for addr in proximities
+                     if packet['bdaddr'] in addr][0]
+        if proximity == 'FAR':
+            self.log.info('BLE is really away. Change status.')
+            self.remove_device(packet['ble_uri'])
+            self.patient_on_room = None
+            self._ensure_consistency('PatientOut', packet)
+        else:
+            self.log.info('Signal recovered.')

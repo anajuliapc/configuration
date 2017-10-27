@@ -1,0 +1,159 @@
+# 2017 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#
+
+import smtplib
+import os
+import sched, time
+import calendar
+import argparse
+
+class EmailSender():
+
+    def __init__(self):
+        self.receivers = ['ana.caetano@eldorado.org.br',
+                          'ana.caetano@eldorado.org.br']
+
+    def _email_everyone(self, body):
+        for receiver in self.receivers:
+            self._send_email(receiver, body)
+
+    #    def send_email(self, receiver, body):
+    def email_everyone(self, body):
+        user = 'iotshared@gmail.com'
+        pwd = 'ipe@2015'
+        # Prepare actual message
+        # for rcvr in self.receivers:
+        #     receivers += str()
+        msg = '\r\n'.join(['From: Centro Cirurgico HC',
+                           'To: ' + self.receivers[0] + ',' + self.receivers[1],
+                           'Subject: [HC] RPi status',
+                           '',
+                           body]).encode('utf-8')
+        try:
+            # Gmail parameters
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.ehlo()
+            server.starttls()
+            server.login(user, pwd)
+            # Send e-mail
+            server.sendmail(user, self.receivers, msg)
+            server.close()
+            print('Successfully sent the email.')
+        except:
+            print('Failed to send email.')
+            raise
+
+
+class VMNotify(EmailSender):
+
+    def __init__(self):
+        super().__init__()
+        self.s = sched.scheduler(time.time, time.sleep)
+        # IPs of all RPis. It can be changed to get IPs from DB
+        self.rpis2 = {'10.10.27.68': None}
+        self.rpis = {'10.1.240.3': 'UP', '10.1.240.4': 'UP',
+                     '10.1.240.5': 'UP', '10.1.240.6': 'UP',
+                     '10.1.240.7': 'UP', '10.1.240.8': 'UP'}
+        self.check_all_rpis()
+
+    def check_all_rpis(self):
+        ip_list = self.rpis
+        for ip in ip_list:
+            self.check_rpi(ip)
+        # Check all Pis every 15 minutes
+        self.s.enter(5, 1, self.check_all_rpis)
+        self.s.run()
+
+    def check_rpi(self, rpi_ip):
+        print('Check connection')
+        self.check_connection(rpi_ip)
+
+    def check_connection(self, rpi_ip):
+        response = os.system('ping -c 1 ' + rpi_ip)
+        # If the connection fails, ping returns a non-zero value
+        if response == 0:
+            new_status = 'UP'
+            if self.rpis[rpi_ip] != new_status:
+                self.rpis[rpi_ip] = 'UP'
+                body = 'Raspberry de ip ' + rpi_ip + ' funcionando.'
+                self.email_everyone(body)
+            else:
+                print('System up!')
+        else:
+            new_status = 'DOWN'
+            if self.rpis[rpi_ip] != new_status:
+                print('System down, send email.')
+                self.rpis[rpi_ip] = 'DOWN'
+                body = 'Raspberry de ip ' + rpi_ip + ' fora do ar.'
+                self.email_everyone(body)
+    # TODO
+    #         else:
+    #             # Check if it is still down after 24 hours
+    #             self.s.enter(15, 1, self.still_down, *args)
+
+    # def still_down(self, *args, **kwargs):
+    #     print(args)
+    #     response = os.system('ping -c 1 ' + rpi_ip)
+    #     # If the connection fails, ping returns a non-zero value
+    #     if response != 0:
+    #         print('System down, send email.')
+    #         self.rpis[rpi_ip] = 'DOWN'
+    #         body = 'Raspberry de ip ' + rpi_ip + ' fora do ar ha '
+    #         body = body + count + ' dias.'
+    #         self.email_everyone(body)
+    #         self.s.enter(24*60*60, 1, self.still_down, (rpi_ip, count+1))
+
+
+class RPiNotify(EmailSender):
+
+    def __init__(self):
+        super().__init__()
+        self.log_path = '/mnt/hospital/'
+        self.s = sched.scheduler(time.time, time.sleep)
+        self.check_log()
+
+    def check_log(self):
+        log_files = os.listdir(self.log_path)
+        # If there is none or more than one file on log folder,
+        # it should be investigated
+        ip = os.system('hostname -I')
+        if len(log_files) != 1:
+            msg = "Tem algo errado com os logs da Pi de IP " + str(ip)
+            msg = msg + ". Melhor verificar."
+            self.email_everyone(msg)
+            # Warn again after 24 hours
+            self.s.enter(24*60*60, 1, self.check_log)
+        # If there is only one, than check if it's up to date
+        else:
+            fname = log_files[0]
+            log_time = os.path.getmtime(self.log_path+fname)
+            curr_time = calendar.timegm(time.gmtime())
+            delta = curr_time - log_time
+            if delta > 300:
+            # If nothing was modified in the past 5 minutes,
+            # there is something wrong.
+                msg = "O arquivo de logs da Pi " + ip
+                msg = msg + " esta desatualizado. Verificar."
+                self.email_everyone(msg)
+            # Check logs every 15 minutes
+            self.s.enter(15*60, 1, self.check_log)
+        self.s.run()
+
+
+def main():
+
+    parser = argparse.ArgumentParser(description='Notify if anything fails.')
+    parser.add_argument('--VM', default=False,
+                        help='VM is true if application is running at the VM')
+    args = parser.parse_args()
+
+    if args.VM:
+        VMNotify()
+    else:
+        RPiNotify()
+
+if __name__ == '__main__':
+    main()

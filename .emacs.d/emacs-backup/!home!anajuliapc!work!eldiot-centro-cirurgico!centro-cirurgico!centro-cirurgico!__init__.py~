@@ -1,0 +1,112 @@
+from model.room import Room
+from model.room_status import RoomStatus
+from model.raspberry import Raspberry
+from model.device import Device
+from model.device_status import DeviceStatus
+from model.accepted_device import AcceptedDevice
+from model.transaction import Transaction
+
+from dao.room_dao import RoomDao
+from dao.room_status_dao import RoomStatusDao
+from dao.raspberry_dao import RaspberryDao
+from dao.device_status_dao import DeviceStatusDao
+from dao.accepted_device_dao import AcceptedDeviceDao
+from dao.transaction_dao import TransactionDao
+
+import yaml
+import time
+import datetime
+from bluepy.btle import Scanner
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+engine = create_engine('postgresql://postgres:a18zxy@hc-dev.dsb.eldorado.org.br/hospital')
+Session = sessionmaker(bind=engine)
+
+class Application(object):
+
+	def __init__(self):
+		with open("configuration.yaml", 'r') as stream:
+			self.config = yaml.load(stream)
+		
+		self.db_session = Session()
+		self.room_dao = RoomDao(self.db_session)
+		self.raspberry_dao = RaspberryDao(self.db_session)
+		self.room_status_dao = RoomStatusDao(self.db_session)
+		self.device_status_dao = DeviceStatusDao(self.db_session)
+		self.accepted_device_dao = AcceptedDeviceDao(self.db_session)
+		self.transaction_dao = TransactionDao(self.db_session)
+
+		self.raspberry = self.raspberry_dao.find_by_id(self.config['raspberry']['id'])
+		
+		#TODO: mudar este atributo para classe Room
+		self.room_devices = []
+
+	#cria dicionario de devices (mac: id)
+	#para ficar em memoria pois eh mais rapido que consultar banco
+	def _accepted_devices_mac_id_dictionary(self):
+		result_dict = {}
+		for acc_dev in self.raspberry.accepted_devices:
+			result_dict[acc_dev.device.mac_address] = acc_dev.device.id
+		return result_dict
+
+	#cria dicionario de devices (mac: rssi)
+	#para ficar em memoria pois eh mais rapido que consultar banco
+	def _accepted_devices_mac_rssi_dictionary(self):
+		result_dict = {}
+		for acc_dev in self.raspberry.accepted_devices:
+			result_dict[acc_dev.device.mac_address] = acc_dev.rssi_limit
+		return result_dict
+
+	#cria lista de macs que a raspberry aceita, 
+	#para ficar em memoria pois eh mais rapido que consultar banco
+	def _accepted_devices_mac_list(self):
+		result_list = []
+		for acc_dev in self.raspberry.accepted_devices:
+			result_list.append(acc_dev.device.mac_address)
+		return result_list
+
+	def scan(self):
+		print('scanning...')
+		scanner = Scanner(0)
+		accepted_devices_mac_list = self._accepted_devices_mac_list()
+		accepted_devices_mac_id_dict = self._accepted_devices_mac_id_dictionary()
+		accepted_devices_mac_rssi_dict = self._accepted_devices_mac_rssi_dictionary()
+
+		while True:
+			devices = scanner.scan(10)
+
+			#lista dos macs dos devices para logica de FAR
+			devices_mac = []
+
+			#registra device na sala (NEAR)
+			for device in devices:
+				if((device.addr in accepted_devices_mac_list) and ((-1 * device.rssi) <= (-1 * accepted_devices_mac_rssi_dict[device.addr]))):
+					devices_mac.append(device.addr)
+					if(device.addr not in self.room_devices):	
+						#cria transaction
+						transaction = Transaction(device_id = accepted_devices_mac_id_dict[device.addr], room_id = self.raspberry.room.id, type = 'IN', datetime = datetime.datetime.now())
+						self.transaction_dao.save(transaction)
+						self.room_devices.append(device.addr)
+						print('{} : {}'.format(device.addr, device.rssi))
+
+
+			#remove device da sala (FAR)
+			macs_to_remove = []
+			for device_in_room in self.room_devices:
+				print('DEVICE IN ROOM: {}'.format(device_in_room))
+				if(device_in_room not in devices_mac):
+					macs_to_remove.append(device_in_room)
+			for mac in macs_to_remove:
+				print('DEVICE TO REMOVE: {}'.format(mac))
+				transaction = Transaction(device_id = accepted_devices_mac_id_dict[mac], room_id = self.raspberry.room.id, type = 'OUT', datetime = datetime.datetime.now())
+				self.transaction_dao.save(transaction)
+				self.room_devices.remove(mac)
+					
+						
+			time.sleep(self.config['scanner']['interval'])
+
+if __name__ == '__main__':
+	app = Application()
+	app.scan()

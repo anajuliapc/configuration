@@ -1,0 +1,95 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            João Victor Duarte Martins <joao.martins@eldorado.org.br>
+#            Paulo Renato de Faria <paulo.faria@eldorado.org.br>
+#
+
+
+import logging
+import argparse
+
+from twisted.internet import defer, reactor
+
+import os
+import time
+import subprocess
+import atexit
+import sys
+import psutil
+import collections
+
+from pkg_resources import resource_stream
+from json import dumps
+import yaml
+
+from .observer import Logger
+
+from ._version_info import __version__
+
+
+class BLEScanner():
+
+    default_interface = 'br.org.eldorado.sensor.bluetooth.scanner'
+
+    log = Logger.logger('Scanner')
+
+    def __init__(self, rpi_id, observable):
+        self.uri = '/br/org/eldorado/rpi/{}/sensor/bluetooth/scanner' \
+                   .format(rpi_id)
+
+    def scan(self):
+        print('scanning...')
+        scanner = Scanner(0)
+        accepted_devices_mac_list = self._accepted_devices_mac_list()
+        accepted_devices_mac_id_dict = self._accepted_devices_mac_id_dictionary()
+        accepted_devices_mac_rssi_dict = self._accepted_devices_mac_rssi_dictionary()
+
+        while True:
+            devices = scanner.scan(10)
+
+            #lista dos macs dos devices para logica de FAR
+            devices_mac = []
+            rssi = device.rssi
+            distance = 10**((txpower-rssi)/20)
+
+            #registra device na sala (NEAR)
+            for device in devices:
+                if(device.addr in accepted_devices_mac_list)
+                   and distance <= threshold)
+#                   and ((-1 * device.rssi) <= (-1 * accepted_devices_mac_rssi_dict[device.addr]))):
+                    devices_mac.append(device.addr)
+                    if(device.addr not in self.room_devices):
+                        #cria transaction
+                        transaction = Transaction(
+                            device_id = accepted_devices_mac_id_dict[device.addr],
+                            room_id = self.raspberry.room.id,
+                            type = 'IN',
+                            datetime = datetime.datetime.now())
+                        self.transaction_dao.save(transaction)
+                        self.room_devices.append(device.addr)
+                        print('{} : {}'.format(device.addr, device.rssi))
+                        self._observable.update_observers('NEAR transition', first_check)
+
+
+
+                #remove device da sala (FAR)
+                macs_to_remove = []
+                for device_in_room in self.room_devices:
+                    print('DEVICE IN ROOM: {}'.format(device_in_room))
+                    if(device_in_room not in devices_mac):
+                        macs_to_remove.append(device_in_room)
+                        for mac in macs_to_remove:
+                            print('DEVICE TO REMOVE: {}'.format(mac))
+                            transaction = Transaction(
+                                device_id = accepted_devices_mac_id_dict[mac],
+                                room_id = self.raspberry.room.id,
+                                type = 'OUT',
+                                datetime = datetime.datetime.now())
+                            self.transaction_dao.save(transaction)
+                            self.room_devices.remove(mac)
+
+
+                        time.sleep(self.config['scanner']['interval'])

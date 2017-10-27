@@ -1,0 +1,13 @@
+from model.room import Room
+
+class RoomDao(object):
+
+        def __init__(self, session):
+                self.session = session
+
+        def save(self, room):
+                self.session.add(room)
+                self.session.commit()
+
+        def find_by_id(self, id):
+                return self.session.query(Room).get(id)

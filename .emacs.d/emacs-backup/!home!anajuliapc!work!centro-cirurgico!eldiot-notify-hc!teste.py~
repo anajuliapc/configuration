@@ -1,0 +1,8 @@
+import os
+
+mac_address = os.system('iwlist wlan0 scan | grep Address')
+print(mac_address)
+rpi_ip = '10.10.10.10'
+body = 'Raspberry de ip ' + rpi_ip + ' funcionando. '
+body = body + 'Conectada no AP de MAC: ' + str(mac_address)
+print(body)

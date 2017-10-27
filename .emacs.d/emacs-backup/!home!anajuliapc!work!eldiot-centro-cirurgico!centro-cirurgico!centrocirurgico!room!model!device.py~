@@ -1,0 +1,16 @@
+from model import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+class Device(Base):
+
+	__tablename__ = 'device'
+
+	id = Column(Integer, primary_key=True)
+	type = Column(String)
+	mac_address = Column(String)
+	label = Column(String)
+	observations = Column(String)
+	device_status = relationship("DeviceStatus", uselist=False, back_populates="device")
+	raspberrys_accepted = relationship("AcceptedDevice")
+	transactions = relationship("Transaction")

@@ -1,0 +1,162 @@
+sample:
+  - time: 0.025
+    maxlen: 1
+    ble_max_offline_time: 60
+    alpha: 0.1
+
+hospital_rooms:
+  - mac: 102710
+    resource: scanner
+    room_uri: /br/unicamp/hc/pre_surgery
+    scanner: /br/org/eldorado/rpi/102710/sensor/bluetooth/scanner
+    room_type: pre_surgery
+    threshold: 1 #distancia em metros
+  - mac: 102711
+    resource: scanner
+    room_uri: /br/unicamp/hc/post_surgery
+    scanner: /br/org/eldorado/rpi/102711/sensor/bluetooth/scanner
+    room_type: post_surgery
+    threshold: 1 #distancia em metros
+  - mac: 102701
+    resource: scanner
+    room_uri: /br/unicamp/hc/surgery1
+    scanner: /br/org/eldorado/rpi/102701/sensor/bluetooth/scanner
+    room_type: surgery
+    threshold: 5 #distancia em metros
+  - mac: 102702
+    resource: scanner
+    room_uri: /br/unicamp/hc/surgery2
+    scanner: /br/org/eldorado/rpi/102702/sensor/bluetooth/scanner
+    room_type: surgery
+    threshold: 5 #distancia em metros
+  - mac: 102703
+    resource: scanner
+    room_uri: /br/unicamp/hc/surgery03
+    scanner: /br/org/eldorado/rpi/102703/sensor/bluetooth/scanner
+    room_type: surgery
+    threshold: 5 #distancia em metros
+
+ble_monitored_devices:
+  # DEBUG BANDS
+  - tag: semetiqueta
+    bdaddr: DF:FB:04:29:3D:88
+    tx_power: -60
+    type: patient
+    ble_uri: /br/unicamp/hc/ble/pct-sem-etiqueta
+  - tag: etiquetado
+    bdaddr: D6:40:8E:E8:74:B6
+    tx_power: -60
+    type: box
+    ble_uri: /br/unicamp/hc/ble/box-com-etiqueta
+  - tag: PORTAC
+    bdaddr: CF:12:EE:DB:56:57
+    tx_power: -55
+    type: cleaning
+    ble_uri: /br/unicamp/hc/ble/cleaning-porta-c
+
+  # # Patient bands
+  # # Sala 7
+  # - tag: PCT1
+  #   bdaddr: C8:0F:10:5B:28:B9
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct1
+  # - tag: PCT2
+  #   bdaddr: C8:0F:10:5B:29:08
+  #   tx_power: -71
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct2
+  # - tag: PCT3
+  #   bdaddr: C8:0F:10:69:23:C2
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct3
+  # # Sala 5
+  # - tag: PCT4
+  #   bdaddr: C8:0F:10:5A:CE:69
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct4
+  # - tag: PCT5
+  #   bdaddr: C8:0F:10:68:F7:93
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct5
+  # - tag: PCT6
+  #   bdaddr: C8:0F:10:69:0B:1B
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct6
+  # # Sala 6
+  # - tag: PCT7
+  #   bdaddr: C8:0F:10:68:D5:96
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct7
+  # - tag: PCT8
+  #   bdaddr: C8:0F:10:6B:4B:FB
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct8
+  # - tag: PCT9
+  #   bdaddr: missing
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct9
+  # # Sala 8
+  # - tag: PCT10
+  #   bdaddr: C8:0F:10:5B:9B:BF
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct10
+  # - tag: PCT11
+  #   bdaddr: missing
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct11
+  # - tag: PCT12
+  #   bdaddr: C8:0F:10:5A:FF:B1
+  #   tx_power: -70
+  #   type: patient
+  #   ble_uri: /br/unicamp/hc/ble/pct12
+  # # Cleaning beacons
+  # - tag: LIMP2
+  #   bdaddr: FD:3C:04:B6:A8:18
+  #   tx_power: -58
+  #   type: cleaning
+  #   ble_uri: /br/unicamp/hc/ble/limp2
+  # - tag: LIMP3
+  #   bdaddr: E9:A8:AF:75:05:2C
+  #   tx_power: -58
+  #   type: cleaning
+  #   ble_uri: /br/unicamp/hc/ble/limp3
+  # # Box beacons
+  # - tag: BOX7
+  #   bdaddr: DA:29:71:A1:D4:97
+  #   tx_power: -55
+  #   type: box
+  #   ble_uri: /br/unicamp/hc/ble/box7
+  # - tag: BOX5
+  #   bdaddr: F3:78:83:BC:8E:9A
+  #   tx_power: -55
+  #   type: box
+  #   ble_uri: /br/unicamp/hc/ble/box5
+  # - tag: BOX6
+  #   bdaddr: ED:24:2F:2E:4C:A9
+  #   tx_power: -55
+  #   type: box
+  #   ble_uri: /br/unicamp/hc/ble/box6
+  # - tag: BOX8
+  #   bdaddr: F0:06:C8:22:8F:29
+  #   tx_power: -55
+  #   type: box
+  #   ble_uri: /br/unicamp/hc/ble/box8
+
+database:
+  hostname: hc-dev.dsb.eldorado.org.br
+  port: 5432
+  type: postgresql
+  user: postgres
+  database: hc_centro_cirurgico
+  password: admin
+  enviroment: eldorado

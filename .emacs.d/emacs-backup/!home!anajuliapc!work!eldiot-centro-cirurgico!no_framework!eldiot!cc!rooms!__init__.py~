@@ -1,0 +1,110 @@
+# eldiot - eldorado's middleware for the internet of things
+# © 2015 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Pereira Caetano <ana.caetano@eldorado.org.br>
+#            Paulo Renato de Faria <paulo.faria@eldorado.org.br>
+#
+
+
+import logging
+import argparse
+
+from twisted.internet import defer, reactor
+
+import os
+import time
+import subprocess
+import atexit
+import signal
+import sys
+import numpy as np
+import psutil
+import collections
+
+from pkg_resources import resource_stream
+from json import dumps
+import yaml
+
+from .room import Room, PreSurgeryRoom, PostSurgeryRoom, SurgeryRoom
+from .scanner import BLEScanner
+from .ble_device import BLEDevice
+from .observer import Observer, Observable
+
+
+class BrokerHC():
+
+    log = logging.getLogger(__name__)
+
+    def __init__(self):
+        with resource_stream(__name__, 'parameters.yaml') as stream:
+            self.config = yaml.safe_load(stream)
+        self.rooms = self.config['hospital_rooms']
+        parser = argparse.ArgumentParser(
+            prog='eldiot-centro-cirurgico',
+            description='eldiot broker %(prog)s')
+        self.add_arguments(parser)
+        self.args = parser.parse_args()
+        # Start observable
+        self.observable = Observable()
+        self.on_connect()
+
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            'rpi',
+            help='ID to identify this Raspberry Pi')
+
+    def on_connect(self):
+        print('Connected')
+        # Register scanners and rooms
+        for room in self.rooms:
+            if str(room['mac']) == self.args.rpi:
+                room_uri = room['room_uri']
+                self.set_room(room)
+
+    def set_room(self, room_config):
+        scanner_uri = room_config['scanner']
+        room_type = room_config['room_type']
+        if room_type == 'pre_surgery':
+            room = PreSurgeryRoom(self.observable, room_config)
+            room.status = 'PRE_OPERATORIO'
+        elif room_type == 'surgery':
+            room = SurgeryRoom(self.observable, room_config)
+            room.status = 'LIVRE'
+        else:
+            room = PostSurgeryRoom(self.observable, room_config)
+            room.status = 'RPA'
+        room_observer = RoomUpdate(room)
+        self.observable.register(room_observer)
+        print('Registered room', room.uri)
+        scanner = BLEScanner(room_config['mac'], self.observable)
+        room.scanner = scanner
+        print('Scanner registered:', scanner.uri)
+        scanner.set_threshold(room_config['threshold'])
+        # Register BLE devices to each scanner
+        for device in self.config['ble_monitored_devices']:
+            scanner.set_device(device['bdaddr'],
+                               device['tx_power'],
+                               device['type'],
+                               device['ble_uri'])
+            ble_device = BLEDevice(device['ble_uri'],
+                                   device['bdaddr'],
+                                   device['tx_power'],
+                                   device['type'])
+            self.observable.register_ble(ble_device)
+        scanner.scan()
+
+    def scan_room(self, room_config, counter=0):
+        ''' Deve ser mudada pra apenas verificar consistência de estado'''
+        pass
+
+
+class RoomUpdate(Observer):
+
+    def __init__(self, room):
+        self._room = room
+
+    # should be able to call room.method to deal with changes
+    def update(self, *args, **kwargs):
+        self._room.on_transition(*args)

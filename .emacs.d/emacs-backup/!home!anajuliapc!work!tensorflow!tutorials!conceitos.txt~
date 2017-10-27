@@ -1,0 +1,5 @@
+Arquivo para escrever conceitos visto que euzi aprendo melhor se escrever o que estou lendo.
+
+Gradient Descent:
+- é um algoritmo de otimização usado para encontrar os valores de parametros (coeficientes) de uma função (f) quue minimiza uma função de custo (cost)
+- Quando utilizar: quando os parametros não podem ser calculados analiticamente e devem ser encontrados por um algoritmo de otimizaçoã

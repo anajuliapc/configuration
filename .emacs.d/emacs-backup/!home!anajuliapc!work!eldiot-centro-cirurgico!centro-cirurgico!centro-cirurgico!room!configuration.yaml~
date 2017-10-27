@@ -1,0 +1,27 @@
+
+raspberry:
+ id: 2
+
+database:
+  hostname: hc-dev.dsb.eldorado.org.br
+  port: 5432
+  type: postgresql
+  user: postgres
+  database: hospital
+  password: admin
+
+
+room:
+ id: 1
+ name: Sala07
+ type: surgery
+ description: Sala de Cirurgia 07
+ accepted_devices:
+  - type: patient
+    mac_address: 0F:A8:D5:00:F6
+  - type: box
+    mac_address: 0F:A2:G3:01:B5
+
+scanner:
+ duration: 5
+ interval: 3

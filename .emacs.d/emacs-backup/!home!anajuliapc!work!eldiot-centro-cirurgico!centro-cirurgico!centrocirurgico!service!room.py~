@@ -1,0 +1,257 @@
+# -*- coding: utf-8 -*-
+
+# eldiot monitor hc
+# Copyright @2016 Instituto de Pesquisas Eldorado <http://www.eldorado.org.br>
+# All rights reserved.
+#
+# Author(s): Ana Julia Caetano <ana.caetano@eldorado.org.br>,
+#            Peter Pennings
+
+import datetime
+
+from twisted.internet import reactor
+
+from ..dao.device_dao import DeviceDao
+from ..dao.room_status_dao import RoomStatusDao
+from ..dao.transaction_dao import TransactionDao
+
+from ..model.room_status import RoomStatus
+from ..model.transaction import Transaction
+
+from .ble_device import BLEDevice
+from . import observer
+
+
+class Room(object):
+    """Representation of a room in the hospital."""
+
+    default_interface = 'br.org.eldorado.room.hospital'
+
+    log = observer.Logger.logger('Room')
+
+    def __init__(self, db_session, raspberry, observable, room_cfg, type):
+        self.db_session = db_session
+        self._raspberry = raspberry
+        self._observable = observable
+        self._info = room_cfg
+        self._type = type
+        #: Lists of resources (e.g.: bluetooth scanners).
+        self.devices = []
+        self._status = None
+        self._patient_on_room = None
+        self._needs_cleaning = False
+        self.device_dao = DeviceDao(self.db_session)
+        self.room_status_dao = RoomStatusDao(self.db_session)
+        self.transaction_dao = TransactionDao(self.db_session)
+
+
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+
+    @property
+    def type(self):
+        """ Room type could be:
+
+        (pre-operatory, surgery, post-operatory)"""
+        return self._type
+
+    def add_device(self, device_mac):
+        self.log.info("Add device '{}' to room.".format(device_mac))
+        if device_mac not in self.devices:
+            self.devices.append(device_mac)
+        self.log.info('Devices on room: {}'.format(self.devices))
+
+    def remove_device(self, device_mac):
+        self.log.info("Remove device '{}' from room.".format(device_mac))
+        for device in self.devices:
+            if device == device_mac:
+                self.devices.remove(device)
+        self.log.info('Devices on room: {}'.format(self.devices))
+
+
+class PreSurgeryRoom(Room):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, type='pre_surgery', **kwargs)
+
+    def on_transition(self, device, event_type):
+        self.log.info('Transition on pre surgery')
+        device = self.device_dao.find_by_mac(device.addr)
+        device_type = device.type
+        if device_type == 'patient':
+            transaction = Transaction(
+                device_id = device.id,
+                room_id = self._raspberry.room.id,
+                type = event_type,
+                datetime = datetime.datetime.now())
+            self.transaction_dao.save(transaction)
+
+
+class PostSurgeryRoom(Room):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, type='post_surgery', **kwargs)
+
+    def on_transition(self, device, event_type):
+        self.log.info('Transition on post surgery')
+        device = self.device_dao.find_by_mac(device.addr)
+        device_type = device.type
+        if device_type == 'patient':
+            transaction = Transaction(
+                device_id = device.id,
+                room_id = self._raspberry.room.id,
+                type = event_type,
+                datetime = datetime.datetime.now())
+            self.transaction_dao.save(transaction)
+
+
+class SurgeryRoom(Room):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, type='surgery', **kwargs)
+        self._priority_dict = {
+            'patient': 3,
+            'box': 2,
+            'cleaning': 1,
+            None: 0
+        }
+        self._patient_checker = None
+
+    def on_transition(self, new_device, type):
+        self.log.info('Transitioned!')
+        new_device = self.device_dao.find_by_mac(new_device.addr)
+        self.log.info('New device type: {}'.format(new_device.type))
+        greatest_on_room = self._get_greatest_priority_device(self.devices)
+        greatest_on_room_type = self._get_ble_type(greatest_on_room)
+        self.log.info('Greatest on room type: {}'.format(greatest_on_room_type))
+        current_priority = self._priority_dict[greatest_on_room_type]
+        new_priority = self._priority_dict[new_device.type]
+        if type == 'IN':
+            self.add_device(new_device.mac_address)
+        else:
+            self.remove_device(new_device.mac_address)
+        event = None
+        if new_priority >= current_priority:
+            ble_type = new_device.type
+            if type == 'IN':
+                if ble_type == 'patient':
+                    self._patient_checker = new_device.mac_address
+                    if self._patient_on_room == None:
+                        self._patient_on_room = new_device.mac_address
+                        event = 'PatientIn'
+                        self._needs_cleaning = True
+                elif ble_type == 'cleaning':
+                    event = 'CleaningIn'
+                else:
+                    event = 'BoxIn'
+            else:
+                if ble_type == 'patient':
+                    if self._patient_on_room == new_device.mac_address:
+                        self.log.info('Check if signal is really lost.')
+                        self.add_device(new_device.mac_address)
+                        self._patient_checker = None
+                        seconds = 20
+                        reactor.callLater(seconds,
+                                          self._check_signal_lost,
+                                          new_device)
+                elif ble_type == 'cleaning':
+                    event = 'CleaningOut'
+                else:
+                    event = 'BoxOut'
+        self._ensure_consistency(event, new_device)
+
+    def _ensure_consistency(self, event, device):
+        greatest_on_room = self._get_greatest_priority_device(self.devices)
+        greatest_on_room = self._get_ble_type(greatest_on_room)
+        self.log.info('Event: {}'.format(event))
+        self.log.info('Greatest priority: {}'.format(greatest_on_room))
+        if event == 'PatientOut':
+            if greatest_on_room != 'box':
+                event = 'BoxOut'
+                self._ensure_consistency(event, device)
+                return
+        elif event == 'BoxOut':
+            if greatest_on_room == 'cleaning':
+                event = 'CleaningIn'
+                self._ensure_consistency(event, device)
+                return
+            elif greatest_on_room == 'box':
+                event = 'BoxIn'
+                self._ensure_consistency(event, device)
+                return
+            else:
+                self.log.info('Needs cleaning: {}'.format(self._needs_cleaning))
+                if not self._needs_cleaning:
+                    event = 'CleaningOut'
+                    self._ensure_consistency(event, device)
+                    return
+        elif event == 'CleaningOut':
+            self._needs_cleaning = False
+            self.log.info('Needs cleaning: {}'.format(self._needs_cleaning))
+        elif event == None:
+            self.log.info('Status: {}'.format(self.status))
+            return
+        self._update_room(event, device)
+
+    def _update_room(self, event, device):
+        self._change_room_status(event)
+        if 'In' in event:
+            event_type = 'IN'
+        else:
+            event_type = 'OUT'
+        transaction = Transaction(
+            device_id = device.id,
+            room_id = self._raspberry.room.id,
+            type = event_type,
+            datetime = datetime.datetime.now())
+        self.transaction_dao.save(transaction)
+
+    def _change_room_status(self, event):
+        status = {
+            'PatientIn': 'OPERANDO',
+            'PatientOut': 'AGUARDANDO_RETIRADA_MATERIAIS',
+            'BoxIn': 'LIVRE',
+            'BoxOut': 'AGUARDANDO_LIMPEZA',
+            'CleaningIn': 'LIMPANDO',
+            'CleaningOut': 'PREPARANDO'
+        }
+        room_id = self._raspberry.room_id
+        room_status = self.room_status_dao.find_by_room_id(room_id)
+        room_status.status = status[event]
+        self.status = status[event]
+        self.log.info('Status: {}'.format(self.status))
+        self.room_status_dao.save(room_status)
+
+    def _get_greatest_priority_device(self, devices_array):
+        current_priority = 0
+        greatest_device = None
+        for device in devices_array:
+            ble_type = self._get_ble_type(device)
+            if self._priority_dict[ble_type] > current_priority:
+                current_priority = self._priority_dict[ble_type]
+                greatest_device = device
+        return greatest_device
+
+    def _get_ble_type(self, mac):
+        ble_type = None
+        for acc_dev in self._raspberry.accepted_devices:
+            if acc_dev.device.mac_address == mac:
+                ble_type = acc_dev.device.type
+        return ble_type
+
+    def _check_signal_lost(self, device):
+        self.log.info('Verifying lost signal')
+        if self._patient_checker == self._patient_on_room:
+            self.log.info('Signal recovered.')
+        else:
+            self.log.info("Signal lost."
+                          .format(device.mac_address))
+            self.remove_device(device.mac_address)
+            self._patient_on_room = None
+            event = 'PatientOut'
+            self._ensure_consistency(event, device)

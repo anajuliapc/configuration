@@ -1,0 +1,73 @@
+python bosch_production.py 
+ls
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+ls
+rm output_csv_failed_*
+ls
+rm output_csv_failed_*
+python bosch_production.py 
+ls
+cat output_csv_numeric.csv 
+cat output_csv_categorical.csv 
+cat output_csv_categorical.csv 
+ls
+cat output_csv_failed_categorical.csv
+python bosch_production.py 
+ls
+cat output_csv_numeric.csv 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py ls
+python bosch_production.py ls
+python bosch_production.py
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+python bosch_production.py 
+clear
+clear
+python bosch_production.py 
+python bosch_production.py 
+cat output_csv_numeric.csv 
+cat output_csv_categorical.csv 
+cat output_csv_categorical.csv 
+rm output_csv_numeric.csv 
+rm output_csv_categorical.csv 
+rm output_csv_date.csv 
+ls
+ls
+python bosch_production.py 
+ls
+cat output_csv_numeric.csv 
+python bosch_production.py 
+clear
+python bosch_production.py 
+python bosch_production.py 
+ls
+cat output_csv_categorical.csv 
+ping 10.10.71.38
+python bos
+python bosch_production.py 
+python bosch_production.py 
+git status
+git add bosch_production.py
+git commit -v
+ls
+cd work/datascience/bosch/
+ls
+clear
+clar
+clear
+clear
+python bosch_production.py 
+python bosch_production.py 
