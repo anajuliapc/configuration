@@ -353,10 +353,10 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/anajuliapc/"
  "/home/anajuliapc/work/datascience/bosch/"
  "/home/anajuliapc/work/datascience/bosch/jupyter/"
  "/home/anajuliapc/naju/crackingthecode/"
+ "/home/anajuliapc/"
  "/home/anajuliapc/work/cepetro/"
  "/home/anajuliapc/work/eldiot/eldiot-broker-hc/eldiot/brokers/hc/"
  "/home/anajuliapc/Downloads/"
@@ -407,23 +407,23 @@
 
 ;; ----- ido-work-file-list -----
 (
- ".emacs"
- ".bashrc"
- "pca_svm.py"
  "bosch_production.py"
  "Bosch.ipynb"
  "array-left-rotation.py"
+ ".emacs"
  "contagem.py"
  "get_part_of_csv.py"
  "openmodaltest.py"
  "__init__.py"
+ "conn_length_csv.py"
+ "train_categorical.csv"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/anajuliapc/" (23027 11977 461234 8000) ".ICEauthority" "examples.desktop" ".dbus/" "requirements.txt" ".heroku/" ".ipython/" "stations.png" ".vim/" "5Pikachu.png" ".thunderbird/" ".java/" "line_stations.png" ".davmail.properties~" "eldiot-broker-hc.conf" ".viminfo" "linhas.png" "bosh_lines.png" ".keras/" "linhas_estações.png" "calculap2.py" "crontab-copy" ".gconf/" "smartroom_image.py" "daemon.log" ".netrc" ".gradle/" ".emacs~" ".sky2/" ".gvfs/" "logs.zip" "../" ".emacs.d/" ".pgpass" "builds/" "Templates/" "Music/" "./" "Videos/" ".ssh/" "smartbuilding/" "logs_hc/" ".gimp-2.8/" ".jupyter/" ".npm/" ".pgadmin_histoqueries" ".ido.last" "check-wifi.sh" ".pgadmin3" ".mozilla/" "querybyroom" ".adobe/" ".dbshell" "Pictures/" ".bash_logout" "lines.png" ".pypirc" "watchteste" ".emacs" ".pip/" ".pki/" "aaaaa" ".local/" ".python_history" "crossbarexamples/" ".gstreamer-0.10/" "smartroom_temp_image.py" ".profile" "watchpoint_test.c" ".lesshst" ".cache/" "Desktop/" ".davmail2.properties" "pgadmin.log" "nohup.out" ".macromedia/" "estações.png" "exwatchpoint" "abstract.txt" "myconfig/" "Public/" ".Xauthority" ".dmrc" ".thumbnails/" ".tmux.conf" ".plotly/" ".config/" ".bash_history" "Downloads/" "rpi_images/" "Documents/" "setuptools-24.0.2.zip" "select" "imagerpi81030217.gz" ".xinputrc" ".xsession-errors" ".selected_editor" "eldiot_monitor_hc-2.6-py3-none-any.whl" ".gitconfig" "demo-eldiot/" ".bashrc" "work/" "naju/" "a.out" ".xsession-errors.old" "Portal/" ".purple/" ".wine/" ".gnome/" ".fctsslvpnhistory" ".mongorc.js" ".compiz/" ".davmail.properties")
+ ("/home/anajuliapc/work/datascience/bosch/" (23024 26853 36681 220000) "numeric_output.txt" "output_failed_date.txt" "get_part_of_csv.py" "output_failed_numeric.txt" "responses.txt" "teste.txt" "data/" "../" "./" "backup/" "outputs/" "bosch_production.py" "responses1.txt" "failed_ids.csv" "contagem.py" "output_failed_categorical.txt" ".git/" "jupyter/")
 
- ("/home/anajuliapc/work/datascience/bosch/" (23025 46575 487378 809000) "numeric_output.txt" "output_failed_date.txt" "get_part_of_csv.py" "output_failed_numeric.txt" "responses.txt" "teste.txt" "data/" "../" "./" "backup/" "outputs/" "pca_svm.py" "bosch_production.py" "responses1.txt" "failed_ids.csv" "contagem.py" "output_failed_categorical.txt" ".git/" "jupyter/")
+ ("/home/anajuliapc/" (23016 61253 836807 187000) ".ICEauthority" "examples.desktop" ".dbus/" "requirements.txt" ".heroku/" ".ipython/" "stations.png" ".vim/" "5Pikachu.png" ".thunderbird/" ".java/" "line_stations.png" ".davmail.properties~" "eldiot-broker-hc.conf" ".viminfo" "linhas.png" "bosh_lines.png" ".keras/" "linhas_estações.png" "calculap2.py" "crontab-copy" ".gconf/" "smartroom_image.py" "daemon.log" ".netrc" ".gradle/" ".emacs~" ".sky2/" ".gvfs/" "logs.zip" "../" ".emacs.d/" ".pgpass" "builds/" "Templates/" "Music/" "./" "Videos/" ".ssh/" "smartbuilding/" "logs_hc/" ".gimp-2.8/" ".jupyter/" ".npm/" ".pgadmin_histoqueries" ".ido.last" "check-wifi.sh" ".pgadmin3" ".mozilla/" "querybyroom" ".adobe/" ".dbshell" "Pictures/" ".bash_logout" "lines.png" ".pypirc" "watchteste" ".emacs" ".pip/" ".pki/" "aaaaa" ".local/" ".python_history" "crossbarexamples/" ".gstreamer-0.10/" "smartroom_temp_image.py" ".profile" "watchpoint_test.c" ".lesshst" ".cache/" "Desktop/" ".davmail2.properties" "pgadmin.log" "nohup.out" ".macromedia/" "estações.png" "exwatchpoint" "abstract.txt" "myconfig/" "Public/" ".Xauthority" ".dmrc" ".thumbnails/" ".tmux.conf" ".plotly/" ".config/" ".bash_history" "Downloads/" "rpi_images/" "Documents/" "setuptools-24.0.2.zip" "select" "imagerpi81030217.gz" ".xinputrc" ".xsession-errors" ".selected_editor" "eldiot_monitor_hc-2.6-py3-none-any.whl" ".gitconfig" "demo-eldiot/" ".bashrc" "work/" "naju/" "a.out" ".xsession-errors.old" "Portal/" ".purple/" ".wine/" ".gnome/" ".fctsslvpnhistory" ".mongorc.js" ".compiz/" ".davmail.properties")
 
  ("/home/anajuliapc/work/datascience/bosch/jupyter/" (22998 9059 743604 967000) "Bosch.ipynb" "../" "./" ".ipynb_checkpoints/")
 

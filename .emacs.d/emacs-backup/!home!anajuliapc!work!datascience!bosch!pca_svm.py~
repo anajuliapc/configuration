@@ -20,34 +20,31 @@ if __name__ == '__main__':
              'data/train_categorical.csv',
              'data/train_numeric.csv']
 
-    # Get labels:
-    labels = []
+    # Numbers:
     with open(files[2], 'r') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            labels.append(row[-1])
-
+	reader = csv.reader(f)
+           
+ 
     dataset = files[2]
 
-    print(dataset)
+    # Get labels:
+
     pca = PCA(n_components=21)
     data_pca_aux = pd.read_csv(dataset)
     print(data_pca_aux.shape)
-    # data_pca = data_pca_aux.fillna(0)
-    # #X = data.values
-    # #X = scale(X)
-    # data_reduced = pca.fit_transform(data_pca)
-    # print(data_reduced.shape)
-    # print(data_reduced)
+    data_pca = data_pca_aux.fillna(0)
+    #X = data.values
+    #X = scale(X)
+    data_reduced = pca.fit_transform(data_pca)
+    print(data_reduced.shape)
+    print(data_reduced)
 
-    # #X = data.values
-    # #X = scale(data_pca)
-    # pca.fit(data_pca)
-    # pca.components_.shape
+    #X = data.values
+    #X = scale(data_pca)
+    pca.fit(data_pca)
+    pca.components_.shape
 
-    # #pca.components_
-    # pca.explained_variance_ratio_
-    # print(pca.components_.shape)
-    # pca.components_[0].shape
-
-    # print("deu tudo certo")
+    #pca.components_
+    pca.explained_variance_ratio_
+    print(pca.components_.shape)
+    pca.components_[0].shape

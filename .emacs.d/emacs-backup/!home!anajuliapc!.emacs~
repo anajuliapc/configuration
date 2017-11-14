@@ -39,8 +39,8 @@
 
 ;; Custom Keys
 (global-unset-key (kbd "<f9>"))
-(global-unset-key "\C-Z")
-(global-set-key "\C-Z" 'undo)
+;;(global-unset-key "\C-Z")
+(global-set-key "\C-U" 'undo)
 
 (global-set-key "\C-X\C-R" 'replace-string)
 (global-set-key "\C-C\C-C" 'comment-region)
@@ -51,6 +51,17 @@
 (global-set-key "\C-Q" 'ace-jump-char-mode)
 
 (global-unset-key "\C-X\C-Z")
+
+;; vim like:
+;; make cursor movement keys under right hand's home-row.
+(global-unset-key (kbd "M-j"))
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-j") 'backward-char)
+(global-set-key (kbd "M-k") 'next-line)
+(global-set-key (kbd "M-l") 'forward-char)
+
+(global-set-key (kbd "<home>") 'beginning-of-buffer)
+(global-set-key (kbd "<end>") 'end-of-buffer)
 
 (setq package-archives '(
                          ;; ("gnu" . "http://elpa.gnu.org/packages/")
@@ -99,11 +110,42 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(android-mode-sdk-dir "~/.rubymotion-android/sdk")
- '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(coffee-tab-width 2)
- '(custom-enabled-themes (quote (manoj-dark)))
- '(custom-safe-themes (quote ("cfc387d83d9f4806691121d8fa3d3943300d77de642a31e3282361bb3bc7b43f" "c9979f381d5bf02cb0d5e7b1c3da09f68b9b74be84f6f414883ebc03a42faffc" default)))
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+ '(custom-enabled-themes (quote (grandshell)))
+ '(custom-safe-themes
+   (quote
+    ("b825687675ea2644d1c017f246077cdd725d4326a1c11d84871308573d019f67" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "cc60d17db31a53adf93ec6fad5a9cfff6e177664994a52346f81f62840fe8e23" "a56a6bf2ecb2ce4fa79ba636d0a5cf81ad9320a988ec4e55441a16d66b0c10e0" "ceac2958ee209fd02f8abaae5bacdf55baf639048ae28466e35fb9c26528d546" "e1da9202ddfb70f59774d2df4b680841df7f8716c03adb4541ead93014d8a3a2" "830fe6ac81e243243d2dc5a66667fcb1b0dd3b619fb56975e7fcb2dfead0c4a0" "73ec3d19df8641651bb4e4b5c6a3d9c9a3c1d9cabee58527dfec0552ab20170c" "0b6cb9b19138f9a859ad1b7f753958d8a36a464c6d10550119b2838cedf92171" "cfc387d83d9f4806691121d8fa3d3943300d77de642a31e3282361bb3bc7b43f" "c9979f381d5bf02cb0d5e7b1c3da09f68b9b74be84f6f414883ebc03a42faffc" default)))
+ '(fci-rule-color "#121212")
+ '(fringe-mode 6 nil (fringe))
+ '(global-linum-mode t)
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(linum-format (quote "%4d "))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#d54e53")
+     (40 . "goldenrod")
+     (60 . "#e7c547")
+     (80 . "DarkOliveGreen3")
+     (100 . "#70c0b1")
+     (120 . "DeepSkyBlue1")
+     (140 . "#c397d8")
+     (160 . "#d54e53")
+     (180 . "goldenrod")
+     (200 . "#e7c547")
+     (220 . "DarkOliveGreen3")
+     (240 . "#70c0b1")
+     (260 . "DeepSkyBlue1")
+     (280 . "#c397d8")
+     (300 . "#d54e53")
+     (320 . "goldenrod")
+     (340 . "#e7c547")
+     (360 . "DarkOliveGreen3"))))
+ '(vc-annotate-very-old-color nil))
 
 
 
@@ -195,3 +237,6 @@ With argument ARG, do this that many times."
   nil)
 
 (setq js-indent-level 2)
+
+;; For linum mode
+(set-face-foreground 'linum "color-248")
